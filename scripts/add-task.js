@@ -70,7 +70,7 @@ function toggleAssignedDropdown() {
   refs.dropdown.classList.toggle("d-none");
   refs.overlay.classList.toggle("d-none");
   refs.btn.classList.toggle("rotate-180deg");
-  refs.input.parentElement.classList.toggle("blue-border")  
+  refs.input.parentElement.classList.toggle("blue-border")
   refs.btn.classList.contains("rotate-180deg") ? filterUsers() : resetAssigneeFilter();
 }
 
@@ -237,7 +237,7 @@ function initialsFromName(user) {
 function assignedUser(name) {
   let index = searchUserIndex(name);
   const refs = getAssigneeRefs();
-  if (!users[index]) return  
+  if (!users[index]) return
   if (users[index].assigned == false) {
     users[index].assigned = true;
     loadUsers();
@@ -312,7 +312,11 @@ function isTaskDataValid() {
   const formIds = getFormElementsIds();
   if (formIds.title.value.trim().length <= 0) {
     showError(formIds.title, "title");
+    formIds.title.value = "";
     isValid = false;
+  }
+  if (formIds.description.value.trim().length <= 0) {
+    formIds.description.value = "";
   }
   if (formIds.category.span.innerHTML == "Select Task category") {
     showError(formIds.category.dropdown, "category");
