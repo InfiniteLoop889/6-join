@@ -8,13 +8,12 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: 0 40px 0 40px;
+  padding: 0 64px;
 }
 
 .navbar h2 {
   font-weight: 200;
   font-size: 22px;
-  margin-left: 80px;
 }
 
 .join-logo-nav {
@@ -29,7 +28,18 @@
 }
 
 .help-symbol {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-image: url(../assets/icons/help.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   cursor: pointer;
+}
+
+.help-symbol:hover {
+  background-color: rgb(209, 209, 209, 0.5);
 }
 
 .profile-picture {
@@ -52,34 +62,43 @@
 }
 
 .profile-picture:hover {
-  background-color: #d1d1d1;
+  background-color: rgb(209, 209, 209, 0.5);
 }
 
 .menu-container {
   display: flex;
   overflow-x: hidden;
   position: absolute;
-  width: 180px;
-  top: 96px;
-  right: 8px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
   flex-direction: row-reverse;
+  z-index: 1;
 }
 
 .menu {
+  position: relative;
+  top: 116px;
+  height: 160px;
+  width: 156px;
   display: flex;
   flex-direction: column;
-  height: 158px;
-  width: 150px;
   background-color: #2A3647;
   border-radius: 20px 0 20px 20px;
-  transform: translateX(150px);
+  transform: translateX(160px);
   transition: transform 125ms ease-in;
-  z-index: 10;
   overflow: hidden;
+  z-index: 1;
+}
+
+.menu a:first-child {
+  display: none;
 }
 
 .menu-translateX {
-  transform: translateX(-30px);
+  transform: translateX(-24px);
 }
 
 .menu-item {
@@ -89,27 +108,55 @@
   align-items: center;
   cursor: pointer;
   padding-left: 24px;
+  z-index: 1;
 }
 
 .menu-item:hover {
   background-color: rgba(101, 99, 99, 0.132);
 }
 
-@media (max-width: 992px) {
+/* @media (max-width: 992px) {
   .navbar h2 {
     margin-left: 32px;
   }
+} */
+
+@media (max-width: 680px) {
+  #right-content-wrapper {
+    margin-top: 0;
+  }
+
+  #navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    overflow: visible;
+  }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 590px) {
+  .navbar {
+    padding: 0 32px;
+  }
 
-  .nav-imgs {
-    align-items: center;
+  .navbar h2 {
+    display: none;
+  }
+
+  .join-logo-nav {
     display: block;
   }
-  .help-symbol {
-    cursor: pointer;
-    display: none !important;
+
+  .nav-imgs img {
+    display: none;
+  }
+
+  .menu {
+    height: 216px;
+  }
+
+  .menu a:first-child {
+    display: flex;
   }
 }
-

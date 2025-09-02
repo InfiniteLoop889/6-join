@@ -27,7 +27,7 @@ function subListItemEdit(task, id) {
 
 function singleUserContainer(style, initials, name = "XX", color = "red") {
   return `
-        <div class="${style}" onclick="assignedUser('${name}')">
+        <div class="${style}" data-type="userContainer" onclick="assignedUser('${name}')">
             <div class="user-icon" style="background-color: ${color};">${initials}</div>
             <span class="user-name">${name}</span>
             <button type="button" type="button" class="btn-check"></button>
@@ -57,7 +57,7 @@ function descriptionTaskTpl(description = "") {
   return `
         <div class="task-container">
             <label for="description-input" class="task-name">Description</label>
-            <textarea name="" id="description" class="textarea-description">${description}</textarea>
+            <textarea id="description" class="textarea-description">${description}</textarea>
         </div>
     `;
 }
@@ -101,14 +101,14 @@ function assignedTaskTpl() {
         <div class="task-container" id="task-container">
             <span class="task-name">Assigned to:</span>
             <div class="input-container">
-                <input type="text" id="assignedInputSearch" placeholder="Select contacts to assign"
-                    class="input-assaign">
+                <input type="text" id="assignedInputSearch" placeholder="Search for user" value="Select contacts to assign"
+                    class="input-assaign" oninput="filterUsers(value)" disabled>
                 <button type="button" class="btn-dropdown" id="assaign-btn" onclick="toggleAssignedDropdown()">
                     <img src="../assets/icons/arrow_drop_down.svg" alt="">
                 </button>
             </div>
             <div class="dropdown">
-                <div class="assigned-dropdown d-none" id="assigned-dropdown" onclick="onclickProtection(event)"></div>
+                <div class="assigned-dropdown scrollbar-styling d-none" id="assigned-dropdown" onclick="onclickProtection(event)"></div>
             </div>
             <div class="assigned-icons-container" id="icons-container">
             </div>
@@ -150,7 +150,8 @@ function subtaskTpl() {
         <div class="task-container">
             <span class="task-name">Subtask</span>
             <div class="input-container">
-                <input type="text" id="subtask-input" placeholder="Add new subtask" maxlength="32" onkeydown="if(event.key==='Enter'){addSubtask()}">
+                <input type="text" id="subtask-input" placeholder="Add new subtask" maxlength="32" onkeydown="if(event.key==='Enter'){addSubtask()}" 
+                onclick="toggleBlueOutline(event)" onfocusout="toggleBlueOutline(event)">
                 <button type="button" class="btn-dropdown" id="subtask-btn" onclick="addSubtask()">
                     <img src="../assets/icons/add_blue.svg" alt="">
                 </button>
@@ -174,31 +175,30 @@ function editTaskTpl() {
 
 function okBtn(taskId) {
   return `
-        <button class="btn-create" onclick="saveEditedTask('${taskId}'); resetTaskData()">
-            Ok
-            <img src="../assets/icons/check.svg" alt="">
-        </button>
+        <div class="saveBtn-Container">
+            <button class="btn-create" onclick="saveEditedTask('${taskId}'); resetTaskData()">
+                Ok
+                <img src="../assets/icons/check.svg" alt="">
+            </button>
+        </div>
     `;
 }
 
 function createTaskTemplate(id, task) {
   return `
-    <div class="task draggable" data-id="${id}" id="${id}" draggable="true" 
-     ondragstart="dragstartHandler(event, '${id}')" 
-     ondragend="dragendHandler(event)" 
-     onclick="renderSelectedTask('${id}')">
-        <span class="tag ${createCategoryClass(task.category)}">${task.category}</span>
-        <h4>${task.title}</h4>
-        <p class="task-descr">${task.description}</p>
-        ${checkForSubtask(task.subtask)}
-        <div class="task-footer">
-            <div>
-              ${checkForAssignment(task.assigned)}
-            </div>
-            <img src="../assets/icons/prio-${task.priority}.svg" alt="Prio ${task.priority}">
-        </div>
-    </div>
-  `;
+      <div class="dragging-task task draggable" data-id="${id}" id="${id}" draggable="true" onclick="renderSelectedTask('${id}')">
+          <span class="tag ${createCategoryClass(task.category)}">${task.category}</span>
+          <h4>${task.title}</h4>
+          <p class="task-descr">${task.description}</p>
+          ${checkForSubtask(task.subtask)}
+          <div class="task-footer">
+              <div>
+                ${checkForAssignment(task.assigned)}
+              </div>
+              <img src="../assets/icons/prio-${task.priority}.svg" alt="Prio ${task.priority}">
+          </div>
+      </div>
+    `;
 }
 
 function createProgressWrapper(subtasks, numerus, subtaskDone) {
@@ -234,45 +234,47 @@ function createTaskPlaceholderDone() {
 
 function createDetailedTaskTemplate(taskId, task) {
   return `
-    <div id="overlay-wrapper" class="overlay-wrapper overlay-content transit" onclick="onclickProtection(event)">
-        <div class="overlay-header mb-20">
-            <span class="tag-overlay ${createCategoryClass(task.category)}">${task.category}</span>
-            <button class="btn-transparent" onclick="closeOverlay()">
-                <img src="../assets/icons/close.svg" alt="Close">
-            </button>
-        </div>
-
-        <h1 class="mb-20">${task.title}</h1>
-        <p class="mb-20">${task.description}</p>
-
-        <div class="flex mb-20">
-            <div>
-                <div class="section-title mb-20">Due date:</div>
-                <div class="section-title">Priority:</div>
+    <div class="overlay-outer overlay-wrapper transit">
+        <div class="overlay-content" onclick="onclickProtection(event)">
+            <div class="overlay-header mb-20">
+                <span class="tag-overlay ${createCategoryClass(task.category)}">${task.category}</span>
+                <button class="btn-transparent" onclick="closeOverlay()">
+                    <img src="../assets/icons/close.svg" alt="Close">
+                </button>
             </div>
-            <div>
-                <div class="mb-20">${task.date}</div>
-                <div class="overlay-prio">
-                    <span class="capitalize">${task.priority}</span>
-                    <img src="../assets/icons/prio-${task.priority}.svg" alt="Prio ${task.priority}">
+
+            <h1 class="mb-20">${task.title}</h1>
+            <p class="mb-20">${task.description}</p>
+
+            <div class="flex mb-20">
+                <div>
+                    <div class="section-title mb-20">Due date:</div>
+                    <div class="section-title">Priority:</div>
+                </div>
+                <div>
+                    <div class="mb-20">${task.date}</div>
+                    <div class="overlay-prio">
+                        <span class="capitalize">${task.priority}</span>
+                        <img src="../assets/icons/prio-${task.priority}.svg" alt="Prio ${task.priority}">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        ${checkForAssignmentDetailView(task.assigned)}
+            ${checkForAssignmentDetailView(task.assigned)}
 
-        ${checkForSubtasksDetailView(taskId, task.subtask)}
+            ${checkForSubtasksDetailView(taskId, task.subtask)}
 
-        <div class="overlay-footer">
-            <button class="overlay-delete btn-transparent" onclick="deleteTask('tasks/${taskId}')">
-                <img src="../assets/icons/delete.svg" alt="Delete">
-                <span>Delete</span>
-            </button>
-            <span class="overlay-devider"></span>
-            <button class="overlay-edit btn-transparent" onclick="editTask('${taskId}')">
-                <img src="../assets/icons/edit.svg" alt="Edit">
-                <span>Edit</span>
-            </button>
+            <div class="overlay-footer">
+                <button class="overlay-delete btn-transparent" onclick="deleteTask('tasks/${taskId}')">
+                    <img src="../assets/icons/delete.svg" alt="Delete">
+                    <span>Delete</span>
+                </button>
+                <span class="overlay-devider"></span>
+                <button class="overlay-edit btn-transparent" onclick="editTask('${taskId}')">
+                    <img src="../assets/icons/edit.svg" alt="Edit">
+                    <span>Edit</span>
+                </button>
+            </div>
         </div>
     </div>
   `;
@@ -310,7 +312,7 @@ function createSubtaskTemplate(taskId, subtaskArr) {
 }
 
 function createSubtaskListItem(taskId, subtaskObj) {
-  const checkedClass = subtaskObj.edit ? " checked" : "";
+  const checkedClass = subtaskObj.checked ? " checked" : "";
   return `
     <li class="subtask-item mb-14" data-id="${subtaskObj.id}">
       <button class="btn-subtask btn-transparent ${checkedClass}" data-id="${subtaskObj.id}" onclick="checkInOutSubtask('${taskId}', '${subtaskObj.id}')"></button>
@@ -322,9 +324,9 @@ function createSubtaskListItem(taskId, subtaskObj) {
 // --------------------- Contact-Overlay ---------------------------------------
 
 function renderUserInfo(id, user) {
-    const editContainer = document.querySelector(".edit-delete-container");
-    editContainer.innerHTML = responsiveEditMenu(id);
-    return `
+  const editContainer = document.querySelector(".edit-delete-container");
+  editContainer.innerHTML = responsiveEditMenu(id);
+  return `
         <div class="user-details" onclick="event.stopPropagation()">
             <div class="user-name-container">
                 <div class="avatar-circle" style="background-color: ${user.color};">${user.avatar}
@@ -354,7 +356,7 @@ function renderUserInfo(id, user) {
 }
 
 function responsiveEditMenu(id) {
-    return `
+  return `
         <button class="open-edit-delete" onclick="opencEditMenu()"></button>
         <div class="mobile-edit-delete" hidden onclick="closeEditMenu()">
             <div class="user-edit-container">
@@ -367,17 +369,23 @@ function responsiveEditMenu(id) {
                 </button>
             </div>
         </div>
-    `
+    `;
 }
 
 function createContactElement(user, id) {
-    const div = document.createElement("div");
-    div.classList.add("contact");
-    div.addEventListener("click", (event) => {
-        openUserInfos(id);
-        toggleContactBg(event);      
-    });
-    div.innerHTML = `
+  const div = document.createElement("div");
+  div.classList.add("contact");
+  div.addEventListener("mouseover", (event) => {
+    contacMuseover(event);
+  });
+  div.addEventListener("mouseout", (event) => {
+    contactMouseout(event);
+  });
+  div.addEventListener("click", (event) => {
+    openUserInfos(id);
+    toggleContactBg(event);
+  });
+  div.innerHTML = `
         <div class="avatar" style="background-color: ${user.color};">${user.avatar || user.Avatar}</div>
         <div class="info">
             <div class="name">${user.name}</div>
@@ -390,10 +398,21 @@ function createContactElement(user, id) {
 function navLink(icon, link, section) {
   return `
         <li class="nav-link">
-            <div class="img-wrapper">
+            <a href="${link}">
                 <img src="../assets/icons/${icon}.svg" alt="">
-            </div>
-            <a href="${link}" data-task="navLink">${section}</a>
+                ${section}
+            </a>
+        </li>
+    `;
+}
+
+function sidebarLinkTemplate() {
+  return `
+        <li class="nav-link">
+            <a href="../index.html">
+                <img src="../assets/icons/summary.svg" alt="summary">
+                Summary
+            </a>
         </li>
     `;
 }
@@ -401,8 +420,8 @@ function navLink(icon, link, section) {
 function editContactOverlay(user) {
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = `
-    <div id="overlay-wrapper" class="overlay-wrapper transit" onclick="onclickProtection(event)">
-        <div class="modal"> 
+    <div class="overlay-outer overlay-wrapper transit">
+        <div class="modal overlay-content-contact" onclick="onclickProtection(event)"> 
             <div class="modal-left">
                 <div class="modal-left-close">
                     <button onclick="closeOverlay()" class="close-task-white"></button>
@@ -418,24 +437,24 @@ function editContactOverlay(user) {
                         <div class="avatar-circle" id="avatar-edit" style="background-color: #9327FF;">AM</div>
                     </div>
                     <div class="contact-form">
-                        <div class="input-group">
+                        <div class="input-group-contact">
                             <input type="text" id="contact-name" placeholder="Name" value="${user.name}" required >
                             <img class="person-icon" src="../assets/icons/person.svg">
                         </div>
                         <p class="error-signup" data-field="errorName"></p>
-                        <div class="input-group">
+                        <div class="input-group-contact">
                             <input type="email" id="contact-email" placeholder="Email" value="${user.email}" required >
                             <img class="email-icon" src="../assets/icons/mail.svg">
                         </div>
                         <p class="error-signup" data-field="errorEmail"></p>
-                        <div class="input-group">
+                        <div class="input-group-contact">
                             <input type="tel" id="contact-phone" placeholder="Phone" value="${user.phone}" required >
                             <img class="phone-icon" src="../assets/icons/call.svg">
                         </div>
                         <div class="buttons">
                             <button type="button" class="cancel" onclick="closeOverlay()">Cancel</button>
                             <button type="submit" class="create">Save
-                                <img src="/assets/icons/check.svg" alt="check-icon" class="check-icon" />
+                                <img src="../assets/icons/check.svg" alt="check-icon" class="check-icon" />
                             </button>
                         </div>
                     </div>
@@ -448,10 +467,10 @@ function editContactOverlay(user) {
 
 function getContactOverlayTemplate() {
   return `
-    <div id="overlay-wrapper" class="overlay-wrapper transit" onclick="onclickProtection(event)">
-        <div class="modal"> 
+    <div class="overlay-outer overlay-wrapper transit">
+        <div class="modal overlay-content-contact" onclick="onclickProtection(event)"> 
             <div class="modal-left">
-                 <div class="modal-left-close">
+                <div class="modal-left-close">
                     <button onclick="closeOverlay()" class="close-task-white"></button>
                 </div>
                 <img class="contact-logo" src="../assets/icons/join-dark.svg" alt="join-logo">
@@ -465,24 +484,24 @@ function getContactOverlayTemplate() {
                         <img src="../assets/icons/Group 13.svg">
                     </div>
                     <div class="contact-form">
-                        <div class="input-group">
+                        <div class="input-group-contact">
                             <input type="text" id="contact-name" placeholder="Name" required />
                             <img class="person-icon" src="../assets/icons/person.svg">
                         </div>
                         <p class="error-signup" data-field="errorName"></p>
-                        <div class="input-group">
+                        <div class="input-group-contact">
                             <input type="email" id="contact-email" placeholder="Email" required />
                             <img class="email-icon" src="../assets/icons/mail.svg">
                         </div>
                         <p class="error-signup" data-field="errorEmail"></p>
-                        <div class="input-group">
+                        <div class="input-group-contact">
                             <input type="tel" id="contact-phone" placeholder="Phone" required />
                             <img class="phone-icon" src="../assets/icons/call.svg">
                         </div>
                         <div class="buttons">
                             <button type="button" class="cancel" onclick="closeOverlay()">Cancel</button>
                             <button type="submit" class="create">Save
-                                <img src="/assets/icons/check.svg" alt="check-icon" class="check-icon" />
+                                <img src="../assets/icons/check.svg" alt="check-icon" class="check-icon" />
                             </button>
                         </div>
                     </div>

@@ -4,8 +4,7 @@ Board header
 
 .board-wrapper {
   max-width: 1440px;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin: 64px 64px 32px 64px;
 }
 
 .board-header {
@@ -84,8 +83,7 @@ Board header
 }
 
 .add-btn:hover {
-  background-color: #28abe2;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #4589ff;
 }
 
 .add-icon {
@@ -102,6 +100,13 @@ Board
 .board {
   display: flex;
   gap: 16px;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .column {
@@ -126,16 +131,23 @@ Board
 }
 
 .task-wrapper {
+  /* position: relative; */
   height: 100%;
 }
 
 .task {
+  position: relative;
   background: white;
   border-radius: 24px;
   padding: 16px;
   margin-bottom: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  transition: box-shadow ease 250ms;
+}
+
+.task:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), inset 0 0 0 2px #3b82f6;
 }
 
 .tag {
@@ -182,7 +194,7 @@ Board
 }
 
 .subtask {
-  font-size: 0.75rem;
+  font-size: 12px;
 }
 
 .task-footer {
@@ -205,12 +217,14 @@ Board
 }
 
 .empty {
+  /* display: inline-block; */
   text-align: center;
   color: #a8a8a8;
   border: 2px dotted #a8a8a8;
   border-radius: 10px;
   background-color: #e7e7e7;
   padding: 10px;
+  height: auto;
 }
 
 .no-results {
@@ -239,6 +253,7 @@ Overlay
   display: flex;
   justify-content: center;
   align-items: center;
+
   /* fade-in / fade-out effect  */
   opacity: 0;
   transition: opacity 250ms ease;
@@ -248,30 +263,8 @@ Overlay
   opacity: 1;
 }
 
-/* .overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 11;
-  opacity: 0;
-  transition: opacity 250ms ease;
-} */
-
 .overlay.transparent {
   background: transparent !important;
-}
-
-.user-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 11;
-  transition: opacity 250ms ease;
 }
 
 .overlay-wrapper {
@@ -279,16 +272,25 @@ Overlay
   top: 50%;
   left: 50%;
   border-radius: 30px;
+
   /* translate(-50%, -50%) is for centering the overlay-wrapper in the correct position */
   transform: translate(-50%, -50%);
   transition: all 250ms ease-in-out;
 }
 
+.overlay-outer {
+  width: 100%;
+  padding: 0 16px;
+}
+
 .overlay-content {
-  min-width: 420px;
+  max-width: 420px;
+  width: 100%;
   height: auto;
+  border-radius: 30px;
   background-color: #fff;
   padding: 48px 40px;
+  margin: 0 auto;
 }
 
 .transit {
@@ -296,28 +298,8 @@ Overlay
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
-
-/* 
-Die allgemeine Regel ".overlay button" setzt alle Buttons innerhalb des Overlays auf einen neutralen, transparenten Stil zurück. 
-Das führt jedoch dazu, dass speziell gestylte Buttons (z. B. mit Hintergrundfarbe) ihr gewünschtes Aussehen verlieren.
-
-Daher wurde eine separate Klasse "btn-transparent" erstellt, 
-um gezielt nur Buttons transparent zu stylen, ohne andere globale Button-Styles zu beeinflussen.
-*/
-
-/* .overlay button {
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  outline: none;
-  box-shadow: none;
-} */
 
 .btn-transparent {
   background-color: transparent;
@@ -428,6 +410,10 @@ um gezielt nur Buttons transparent zu stylen, ohne andere globale Button-Styles 
   color: #2a3647;
 }
 
+.repo-task-btn {
+  display: none;
+}
+
 /* -------------------------------------------
 Overlay - Detailed Task view 
 ---------------------------------------------- */
@@ -523,9 +509,9 @@ Edit-Task
 ---------------------------------------------- */
 
 .editTask-container {
+  width: 100%;
+  max-height: 496px;
   overflow-y: auto;
-  width: 396px;
-  max-height: 664px;
   padding-right: 8px;
   display: flex;
   flex-direction: column;
@@ -537,14 +523,18 @@ Edit-Task
   flex-direction: row-reverse;
 }
 
+.saveBtn-Container {
+  margin-top: 16px;
+}
+
 /* -------------------------------------------
-Media queries
+Media queries Board
 ---------------------------------------------- */
 
 @media (max-width: 1200px) {
   .board-wrapper {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 16px;
+    margin-right: 16px;
   }
 }
 
@@ -572,27 +562,65 @@ Media queries
 
   .task-wrapper {
     display: flex;
+    flex-grow: 0;
     gap: 10px;
     overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .task {
     min-width: 250px;
+    max-width: 250px;
+    margin-bottom: 0;
   }
 
   .empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 44px;
+  }
+
+  /* .task-overlay {
+    width: 100%;
+  } */
+
+  .board-tasks-container {
+    flex-direction: column;
+    width: 360px;
+    max-height: 496px;
+    overflow-y: auto;
+    padding-right: 8px;
+    gap: 16px;
+  }
+
+  .divider-vertical {
+    display: none;
+  }
+
+  .task-controls {
+    margin-top: 16px;
+    flex-direction: column;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .task-control-btns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
 
 @media (max-width: 590px) {
-  .board-header {
-    display: block;
+  .board-wrapper {
+    margin-left: 32px;
+    margin-right: 32px;
   }
 
-  .board-wrapper {
-    margin-left: 40px;
-    margin-right: 40px;
+  .board-header {
+    display: block;
   }
 
   .mobile-header {
@@ -603,7 +631,7 @@ Media queries
   }
 
   .add-btn-mobile {
-    display: block;
+    display: block !important;
   }
 
   .add-btn-desktop {
@@ -615,25 +643,12 @@ Media queries
   }
 
   .search-field-wrapper-mobile {
-    display: block;
+    display: block !important;
     margin: 25px 0;
   }
 
   .search-field {
     width: 100%;
-  }
-
-  .help-symbol {
-    display: none;
-  }
-  .join-logo-nav {
-    display: flex !important;
-  }
-  .navbar h2{
-    display: none;
-  }
-  .navbar {
-    justify-content: space-between !important;
   }
 
   /* .task-wrapper {
@@ -642,11 +657,67 @@ Media queries
     overflow-x: auto;
   }
 
-  .task {
-    min-width: 250px;
+  .search-field::placeholder {
+    font-size: 14px;
+  }
+
+  .board h3 {
+    font-size: 17px;
   }
 
   .empty {
-    width: 100%;
-  } */
+    font-size: 14px;
+  }
+
+  .overlay-content {
+    font-size: 14px;
+    padding: 24px;
+  }
+
+  .sub-item-editing {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sub-item-editing input {
+    flex-grow: 0;
+  }
+
+  .sub-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .sub-item span {
+    display: none;
+  }
+
+  .tag {
+    font-size: 10px;
+  }
+
+  .task h4,
+  p {
+    font-size: 14px;
+  }
+
+  .progress {
+    height: 5px;
+  }
+
+  .subtask {
+    font-size: 10px;
+  }
+}
+
+@media (320px <=width <=800px) {
+  .addTask-Container {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .column:last-child {
+    margin-bottom: 64px;
+  }
 }

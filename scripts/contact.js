@@ -181,6 +181,17 @@ async function openUserInfos(id) {
     }, 100);
 }
 
+
+
+function closeUserInfo() {
+    const usersInfo = document.querySelector(".info-container");
+    const userDetails = document.querySelector(".user-details");
+    userDetails.classList.remove("translatex-user");
+    setTimeout(() => {
+        usersInfo.innerHTML = "";
+    }, 250);
+}
+
 function openAddContact() {
     const overlay = document.getElementById("overlay");
     openOverlay();
@@ -226,11 +237,21 @@ function closeEditMenu() {
 
 function toggleContactBg(e) {
     const contacts = document.querySelectorAll(".contact");
+    
     contacts.forEach(contact => {
         contact.classList.remove("contact-dark-blue");
     });
     if (!e) return;
-    e.target.classList.add("contact-dark-blue");    
+    e.currentTarget.classList.add("contact-dark-blue");   
+}
+
+function contacMuseover(e) {
+    let target = e.currentTarget;
+    target.classList.contains("contact-dark-blue") ? target.style.backgroundColor = "" : target.style.backgroundColor = "#d1d1d1";
+}
+
+function contactMouseout(e) {
+    e.currentTarget.style.backgroundColor = "";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -90,15 +90,30 @@ function closeAddTask() {
 
 async function renderUserIcon() {
   const element = document.querySelector(".profile-picture");
-  let name = loadUrlParams();
-  if (!name) name = "Guest";
-  element.innerHTML = createAvater(name);
+  let params = new URLSearchParams(window.location.search);
+  element.innerHTML = createAvater(params.get("User"));
 }
 
-function loadUrlParams() {
+function checkUrlParams() {
+  let params = new URLSearchParams(window.location.search);
+  const newParams = new URLSearchParams({
+    User: "Guest",
+    Status: "to-do",
+  });
+  if (params.size == 0) {
+    let url = window.location.href;
+    window.location.href = `${url}?${newParams}`;
+  } else return
+}
+
+function goToAddTaskPage(status) {
   const urlParams = new URLSearchParams(window.location.search);
-  const msg = urlParams.get("msg");
-  return msg;
+  const userName = urlParams.get("User");
+  const params = new URLSearchParams({
+    User: userName,
+    Status: status,
+  });
+  window.location.href = `../html-templates/add-task.html?${params}`; 
 }
 
 function createAvater(name) {
@@ -111,29 +126,17 @@ function createAvater(name) {
 }
 
 function updateLinksWithUserKey(target) {
-  let name = loadUrlParams();
-  if (!name) name = "Guest";
+  const urlParams = new URLSearchParams(window.location.search);
   const links = document.querySelectorAll(`[data-task="${target}"]`);
   links.forEach((element) => {
-    let newLink = element.href + `?msg=${encodeURIComponent(name)}`;
+    let newLink = element.href + `?${encodeURI(urlParams)}`;
     element.href = newLink;
   });
 }
 
-function updateMenuWithUserKey() {
-  let name = loadUrlParams();
-  const menu = document.querySelector(".menu").children;
-  if (!name) name = "Guest";
-  for (let index = 0; index < menu.length; index++) {
-    if (index == 2) break;
-    let newLink = menu[index].href + `?msg=${encodeURIComponent(name)}`;
-    menu[index].href = newLink;
-  }
-}
-
 function isPrivacyMessage() {
-  let msg = loadUrlParams();
-  if (msg === "privacy") adjustLayoutForPrivacyView();
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("User") === "privacy") adjustLayoutForPrivacyView();
 }
 
 function adjustLayoutForPrivacyView() {
@@ -145,33 +148,23 @@ function adjustLayoutForPrivacyView() {
 }
 
 function initializeNavbar() {
+  checkUrlParams();
   renderUserIcon();
   updateLinksWithUserKey("navLink");
-  updateMenuWithUserKey();
 }
 
 function toggleMenu() {
+  const container = document.querySelector(".menu-container");
   const menu = document.getElementById("menu");
-  menu.classList.toggle("menu-translateX");
-}
-
-function toggleMenu() {
-  const container = document.querySelector('.menu-container');
-  const menu = document.querySelector('.menu');
-
-  if (container.style.display === 'flex') {
-
-    menu.classList.remove('menu-visible');
-    menu.classList.add('menu-hidden');
-
-    menu.addEventListener('animationend', function handler() {
-      container.style.display = 'none';
-      menu.removeEventListener('animationend', handler);
-    });
+  if (container.classList.contains("d-none")) {
+    container.classList.remove("d-none");
+    setTimeout(() => {
+      menu.classList.toggle("menu-translateX");
+    }, 50);
   } else {
-
-    container.style.display = 'flex';
-    menu.classList.remove('menu-hidden');
-    menu.classList.add('menu-visible');
+    menu.classList.toggle("menu-translateX");
+    setTimeout(() => {
+      container.classList.add("d-none");
+    }, 150);
   }
 }

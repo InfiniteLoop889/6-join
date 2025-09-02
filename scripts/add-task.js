@@ -3,9 +3,11 @@ let users = [];
 let selectedPriority = "medium";
 let assignedUserArr = [];
 let taskStatus = "to-do";
+let order = 1000;
 
 async function initAddTaskPage() {
   await loadUsersTask();
+  loadUrlStatus();
   loadTaskFormTemplate("firstTaskContainer", "secondTaskContainer");
   activePriority("medium");
 }
@@ -22,7 +24,13 @@ function createSubObj(id, value) {
     id: id,
     value: value,
     edit: false,
+    checked: false
   };
+}
+
+function loadUrlStatus() {
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.size == 0 ? taskStatus = "to-do" : taskStatus = urlParams.get("Status");
 }
 
 function preventFromSubmit(event) {
@@ -43,31 +51,75 @@ function loadTaskFormTemplate(firstTarget, secondTarget) {
   secondContainer.innerHTML += subtaskTpl();
 }
 
-function toggleAssignedDropdown() {
-  const taskContainerRef = document.getElementById("task-container");
-  const btn = document.getElementById("assaign-btn");
-  const assignedDropdown = document.getElementById("assigned-dropdown");
-  const assignedDropdownOverlay = document.getElementById("assigned-dropdown-overlay");
+function getAssigneeRefs() {
+  return {
+    taskContainer: document.getElementById("task-container"),
+    btn: document.getElementById("assaign-btn"),
+    dropdown: document.getElementById("assigned-dropdown"),
+    overlay: document.getElementById("assigned-dropdown-overlay"),
+    input: document.getElementById("assignedInputSearch"),
+  };
+}
 
+function toggleAssignedDropdown() {
+  const refs = getAssigneeRefs();
+  refs.input.disabled = false;
+  refs.input.value = "";
   loadUsers();
-  taskContainerRef.classList.toggle("zindex-12");
-  assignedDropdown.classList.toggle("d-none");
-  assignedDropdownOverlay.classList.toggle("d-none");
-  btn.classList.toggle("rotate-180deg");
+  refs.taskContainer.classList.toggle("zindex-12");
+  refs.dropdown.classList.toggle("d-none");
+  refs.overlay.classList.toggle("d-none");
+  refs.btn.classList.toggle("rotate-180deg");
+  refs.input.parentElement.classList.toggle("blue-border")  
+  refs.btn.classList.contains("rotate-180deg") ? filterUsers() : resetAssigneeFilter();
+}
+
+function filterUsers(input) {
+  if (!input) return;
+  const userContainers = document.querySelectorAll(
+    '[data-type="userContainer"]'
+  );
+  userContainers.forEach((container) => {
+    let userName = container.children[1].innerHTML.toLowerCase();
+    !userName.includes(input.toLowerCase())
+      ? container.classList.add("d-none")
+      : container.classList.remove("d-none");
+  });
+}
+
+function resetAssigneeFilter() {
+  const refs = getAssigneeRefs();
+  const userContainers = document.querySelectorAll(
+    '[data-type="userContainer"]'
+  );
+  refs.input.disabled = true;
+  refs.input.value = "Select contacts to assign";
+  userContainers.forEach((container) => {
+    container.classList.remove("d-none");
+  });
+}
+
+function getCategoryRefs() {
+  return {
+    container: document.getElementById("category-container"),
+    dropdown: document.getElementById("category-dropdown"),
+    overlay: document.getElementById("category-dropdown-overlay"),
+    btn: document.getElementById("category-btn"),
+  };
 }
 
 function toggleCategoryDropdown() {
-  const categoryContainerRef = document.getElementById("category-container");
-  const categoryDropdown = document.getElementById("category-dropdown");
-  const btn = document.getElementById("category-btn");
-  const categoryContainer = document.getElementById("category-container");
-  const assignedDropdownOverlay = document.getElementById("category-dropdown-overlay");
+  const r = getCategoryRefs();
+  r.container.classList.toggle("zindex-12");
+  r.container.classList.toggle("boxshadow");
+  r.dropdown.classList.toggle("d-none");
+  r.overlay.classList.toggle("d-none");
+  r.btn.classList.toggle("rotate-180deg");
+  r.btn.parentElement.classList.toggle("blue-border");
+}
 
-  categoryContainerRef.classList.toggle("zindex-12");
-  categoryDropdown.classList.toggle("d-none");
-  assignedDropdownOverlay.classList.toggle("d-none");
-  btn.classList.toggle("rotate-180deg");
-  categoryContainer.classList.toggle("boxshadow");
+function toggleBlueOutline(e) {
+  e.target.parentElement.classList.toggle("blue-border");
 }
 
 function activePriority(prio) {
@@ -76,7 +128,9 @@ function activePriority(prio) {
   priorities.forEach((priority) => {
     const btn = document.getElementById(priority);
     const icon = document.getElementById(`${priority}-btn-icon`);
-    priority == selectedPriority ? prioBtnActive(btn, icon, priority) : prioBtnOff(btn, icon, priority);
+    priority == selectedPriority
+      ? prioBtnActive(btn, icon, priority)
+      : prioBtnOff(btn, icon, priority);
   });
 }
 
@@ -154,9 +208,19 @@ function loadUsers() {
   users.forEach((user) => {
     let initials = initialsFromName(user.name);
     if (user.assigned) {
-      assignedDropdown.innerHTML += singleUserContainer("single-user-container_select", initials, user.name, user.color);
+      assignedDropdown.innerHTML += singleUserContainer(
+        "single-user-container_select",
+        initials,
+        user.name,
+        user.color
+      );
     } else {
-      assignedDropdown.innerHTML += singleUserContainer("single-user-container", initials, user.name, user.color);
+      assignedDropdown.innerHTML += singleUserContainer(
+        "single-user-container",
+        initials,
+        user.name,
+        user.color
+      );
     }
   });
 }
@@ -172,7 +236,9 @@ function initialsFromName(user) {
 
 function assignedUser(name) {
   let index = searchUserIndex(name);
-  if (users[index].assigned === false) {
+  const refs = getAssigneeRefs();
+  if (!users[index]) return  
+  if (users[index].assigned == false) {
     users[index].assigned = true;
     loadUsers();
     loadAssignedUserIcons();
@@ -183,6 +249,7 @@ function assignedUser(name) {
     loadAssignedUserIcons();
     removeUserFromArray(name);
   }
+  filterUsers(refs.input.value);
 }
 
 function searchUserIndex(name) {
@@ -217,14 +284,27 @@ function removeUserFromArray(name) {
 async function createTaskForm() {
   let validateTask = isTaskDataValid();
   if (!validateTask) return;
-  let task = taskObjTemplate(selectedPriority, assignedUserArr, subtask, taskStatus);
+  let task = taskObjTemplate(
+    selectedPriority,
+    assignedUserArr,
+    subtask,
+    taskStatus
+  );
   await postData("tasks", task);
 }
 
 function runInitIfValid() {
   let validateTask = isTaskDataValid();
   if (!validateTask) return;
+  updateStatusToTodo();
   initAddTaskPage();
+}
+
+function updateStatusToTodo() {
+  taskStatus = "to-do";
+  const url = new URL(window.location.href);
+  url.searchParams.set("Status", "to-do");
+  window.history.replaceState({}, "", url);
 }
 
 function isTaskDataValid() {
@@ -263,7 +343,12 @@ function getFormElementsIds() {
   return formIds;
 }
 
-function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") {
+function taskObjTemplate(
+  priority = "medium",
+  users,
+  subtask,
+  status = "to-do"
+) {
   return {
     title: document.getElementById("titleInput").value,
     description: document.getElementById("description").value,
@@ -273,7 +358,7 @@ function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") 
     category: document.getElementById("select-category").innerHTML,
     subtask: subtask,
     status: status,
-    order: 1000,
+    order: order,
   };
 }
 

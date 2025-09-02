@@ -12,6 +12,8 @@ function renderBoard(tasks) {
       categories[task[1].status].push(task);
     });
 
+    // console.log(categories);
+
     for (let status in categories) {
       let column = document.querySelector(`.column[data-task="${status}"]`);
       let taskWrapper = column.querySelector(".task-wrapper");
@@ -30,13 +32,6 @@ function renderBoard(tasks) {
   addPlaceholdersToEmptyColumns();
 }
 
-// function removeTasks() {
-//   const columns = document.querySelectorAll(".column");
-//   columns.forEach((column) => {
-//     column.querySelectorAll(".task").forEach((task) => task.remove());
-//   });
-// }
-
 function removeTasks() {
   const taskWrappers = document.querySelectorAll(".task-wrapper");
   taskWrappers.forEach((taskWrapper) => {
@@ -44,27 +39,12 @@ function removeTasks() {
   });
 }
 
-// function removePlaceholder() {
-//   const columns = document.querySelectorAll(".column");
-//   columns.forEach((column) => {
-//     column.querySelectorAll(".empty").forEach((empty) => empty.remove());
-//   });
-// }
-
 function removePlaceholder() {
   const taskWrappers = document.querySelectorAll(".task-wrapper");
   taskWrappers.forEach((taskWrapper) => {
     taskWrapper.querySelectorAll(".empty").forEach((empty) => empty.remove());
   });
 }
-
-// LÖSCHEN? NOCH STEHEN LASSEN
-
-// const columns = document.querySelectorAll(".column");
-// columns.forEach((column) => {
-//   column.querySelectorAll(".task").forEach((task) => task.remove());
-//   column.querySelectorAll(".empty").forEach((empty) => empty.remove());
-// });
 
 function createCategoryClass(category) {
   // from e.g. "Technical Task" to "technical-task" for correct CSS class
@@ -75,7 +55,7 @@ function checkForSubtask(subtasks) {
   if (subtasks) {
     let progressHTML = "";
     const numerus = subtasks.length === 1 ? "Subtask" : "Subtasks";
-    const subtaskDone = subtasks.filter((subtask) => subtask.edit);
+    const subtaskDone = subtasks.filter((subtask) => subtask.checked);
     progressHTML += createProgressWrapper(subtasks, numerus, subtaskDone);
     return progressHTML;
   } else {
@@ -108,7 +88,7 @@ function addPlaceholdersToEmptyColumns() {
   const taskWrappers = document.querySelectorAll(".task-wrapper");
   taskWrappers.forEach((taskWrapper) => {
     if (!taskWrapper.querySelector(".task") && !taskWrapper.querySelector(".empty")) {
-      if (taskWrapper.dataset.task === "done") {
+      if (taskWrapper.dataset.category === "done") {
         taskWrapper.innerHTML += createTaskPlaceholderDone();
       } else {
         taskWrapper.innerHTML += createTaskPlaceholder();
@@ -168,12 +148,11 @@ async function checkInOutSubtask(taskId, subtaskId) {
   subtaskRef.classList.toggle("checked");
 
   if (subtask) {
-    subtask.edit = !subtask.edit;
+    subtask.checked = !subtask.checked;
     await putData("tasks/" + taskId, taskObj);
-
     if (subtaskProgress) {
       const numerus = taskObj.subtask.length === 1 ? "Subtask" : "Subtasks";
-      const subtaskDone = taskObj.subtask.filter((st) => st.edit);
+      const subtaskDone = taskObj.subtask.filter((st) => st.checked);
       subtaskProgress.innerHTML = progessTemplate(taskObj.subtask, numerus, subtaskDone);
     }
   }
@@ -191,7 +170,9 @@ async function deleteTask(path) {
 
 async function searchTasks() {
   const tasks = await loadData("/tasks");
-  const searchInput = document.getElementById("search-input").value.toLowerCase();
+  const desktopInput = document.getElementById("search-input-desktop").value.toLowerCase();
+  const mobileInput = document.getElementById("search-input-mobile").value.toLowerCase();
+  const searchInput = desktopInput || mobileInput;
   const tasksObjLength = Object.keys(tasks).length;
 
   for (let task in tasks) {
@@ -233,10 +214,10 @@ async function editTask(taskId) {
 }
 
 function prepareOverlay(taskId) {
-  const overlayWrapper = document.getElementById("overlay-wrapper");
-  overlayWrapper.innerHTML = "";
-  overlayWrapper.innerHTML += editTaskTpl();
-  overlayWrapper.innerHTML += okBtn(taskId);
+  const overlayContent = document.querySelector(".overlay-content");
+  overlayContent.innerHTML = "";
+  overlayContent.innerHTML += editTaskTpl();
+  overlayContent.innerHTML += okBtn(taskId);
 }
 
 function resetTaskData() {
@@ -255,6 +236,7 @@ function importEditElements(task) {
   editTaskContainer.innerHTML += categoryTaskTpl();
   editTaskContainer.innerHTML += subtaskTpl();
   taskStatus = task.status;
+  order = task.order;
 }
 
 function changeCategorie(task) {
@@ -315,59 +297,11 @@ function clearTaskFormContainers() {
   secondBoardAddTask.innerHTML = "";
 }
 
-/*  Drag & Drop function  */
+// Drag and drop
 
-function dragstartHandler(ev, id) {
-  ev.dataTransfer.setData("text", id);
-  ev.target.classList.add("dragging");
-}
-
-function dragendHandler(ev) {
-  ev.target.classList.remove("dragging");
-}
-
-function dragoverHandler(ev) {
-  ev.preventDefault();
-  const column = ev.target.closest(".task-wrapper");
-  const afterElement = getDragAfterElement(column, ev.clientY);
-  const draggable = document.querySelector(".dragging");
-
-  if (afterElement == null) {
-    column.appendChild(draggable);
-  } else {
-    column.insertBefore(draggable, afterElement);
-  }
-}
-
-function getDragAfterElement(column, y) {
-  const draggableElements = [...column.querySelectorAll(".draggable:not(.dragging)")];
-
-  return draggableElements.reduce(
-    (closest, child) => {
-      const box = child.getBoundingClientRect();
-      const offset = y - box.top - box.height / 2;
-      if (offset < 0 && offset > closest.offset) {
-        return { offset: offset, element: child };
-      } else {
-        return closest;
-      }
-    },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
-}
-
-async function dropHandler(ev, category) {
-  ev.preventDefault();
-  const taskId = ev.dataTransfer.getData("text");
-  const targetColumn = ev.target.closest(".task-wrapper");
-  let taskObj = await loadData("tasks/" + taskId);
-  taskObj.status = category;
-
-  if (targetColumn) {
-    adjustPlaceholders();
-    await putData("tasks/" + taskId, taskObj);
-    await adjustTaskOrder(targetColumn);
-  }
+function placeholderHover(event) {
+  event.preventDefault();
+  adjustPlaceholders();
 }
 
 function adjustPlaceholders() {
@@ -375,34 +309,121 @@ function adjustPlaceholders() {
   addPlaceholdersToEmptyColumns();
 }
 
-async function adjustTaskOrder(targetColumn) {
-  const tasksInColumn = targetColumn.querySelectorAll(".draggable");
+function destroySortableInstances() {
+  sortableInstances.forEach((instance) => instance.destroy());
+  sortableInstances = [];
+}
 
-  // tasksInColumn.forEach(async (task, index) => {
-  //   const taskId = task.dataset.id;
-  //   let taskObj = await loadData("tasks/" + taskId);
-  //   taskObj.order = index;
-  //   await putData("tasks/" + taskId, taskObj);
-  // });
+let sortableInstances = [];
+let placeholder = null;
 
-  if (tasksInColumn.length > 0) {
-    for (let i = 0; i < tasksInColumn.length; i++) {
-      const taskId = tasksInColumn[i].dataset.id;
-      let taskObj = await loadData("tasks/" + taskId);
-      taskObj.order = i;
-      await putData("tasks/" + taskId, taskObj);
+function getTaskHeight() {
+  const taskElement = document.querySelector(".task");
+  if (taskElement) {
+    return taskElement.offsetHeight;
+  }
+}
+
+function handleDragStart(evt) {
+  if (window.matchMedia("(max-width: 800px)").matches) {
+    const tasksInColumn = evt.from.querySelectorAll(".task:not(.dragging-task)");
+    if (tasksInColumn.length === 0) {
+      const taskHeight = getTaskHeight();
+      evt.from.style.minHeight = `${taskHeight}px`;
+      evt.from.classList.add("empty-dragging");
     }
   }
 }
+
+function handleDragMove(evt) {
+  hidePlaceholderInColumn(evt.to);
+}
+
+async function handleDragEnd(evt) {
+  document.querySelectorAll(".task-wrapper").forEach((wrapper) => {
+    wrapper.style.minHeight = "";
+  });
+  resetAllPlaceholders();
+  await handleSortableEnd(evt);
+}
+
+function initDragAndDrop() {
+  destroySortableInstances();
+
+  document.querySelectorAll("[data-category]").forEach((column) => {
+    const sortable = Sortable.create(column, {
+      group: "tasks",
+      animation: 150,
+      delay: window.matchMedia("(pointer: coarse)").matches ? 150 : 0,
+      touchStartThreshold: 5,
+      onStart: handleDragStart,
+      onMove: handleDragMove,
+      onEnd: handleDragEnd,
+    });
+    sortableInstances.push(sortable);
+  });
+}
+
+async function handleSortableEnd(evt) {
+  const column = evt.to;
+  const category = column.getAttribute("data-category");
+  const tasksInColumn = column.querySelectorAll(".draggable");
+
+  for (let i = 0; i < tasksInColumn.length; i++) {
+    const taskId = tasksInColumn[i].dataset.id;
+    let taskObj = await loadData("tasks/" + taskId);
+    taskObj.status = category;
+    taskObj.order = i;
+    await putData("tasks/" + taskId, taskObj);
+  }
+
+  adjustPlaceholders();
+}
+
+function hidePlaceholderInColumn(column) {
+  column.querySelectorAll(".empty").forEach((empty) => empty.classList.add("hidden"));
+}
+
+function resetAllPlaceholders() {
+  adjustPlaceholders();
+}
+
+function adjustPlaceholders() {
+  removePlaceholder();
+  addPlaceholdersToEmptyColumns();
+}
+
+window.addEventListener("resize", () => {
+  initDragAndDrop();
+});
 
 /*  Initializing  */
 
 async function initBoard() {
   let taskObj = await loadData("tasks/");
-  document.getElementById("search-input").value = "";
+  document.getElementById("search-input-desktop").value = "";
+  document.getElementById("search-input-mobile").value = "";
+
   renderBoard(taskObj);
+  initDragAndDrop();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initBoard();
+  closeAddTaskMobile();
 });
+
+function closeAddTaskMobile() {
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= 590) {
+      let addTaskBoard = document.getElementById("add-task-board");
+      if (!addTaskBoard.classList.contains("d-none")) {
+        const addTask = document.getElementById("add-task-board");
+        const container = document.getElementById("task-overlay");
+        addTask.classList.toggle("transparent-background");
+        container.classList.toggle("transit");
+        addTask.classList.toggle("d-none");
+      };
+    }
+  })
+}

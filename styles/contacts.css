@@ -1,3 +1,7 @@
+body {
+  flex-direction: row;
+}
+
 #contact-wrapper {
   flex: 1;
   overflow: auto;
@@ -65,11 +69,6 @@
   cursor: pointer;
   border-radius: 12px;
   transition: background-color 250ms ease;
-}
-
-.contact:hover {
-  background-color: #1f2e45;
-  color: white;
 }
 
 .contact-dark-blue {
@@ -193,12 +192,10 @@
 
 /* Overlay Style */
 
-.overlay-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
+.overlay-content-contact {
   width: 400px;
-  max-width: 90%;
+  border-radius: 10px;
+  margin: 0 auto;
 }
 
 .modal {
@@ -280,7 +277,7 @@
 
 .avatar-container {
   height: 100%;
-  padding: 92px 56px 0 40px;
+  padding: 92px 56px 0 22px;
 }
 
 .contact-form {
@@ -293,14 +290,14 @@
   flex-grow: 1;
 }
 
-.input-group {
+.input-group-contact {
   position: relative;
   width: 100%;
 }
 
-.input-group input {
+.input-group-contact input {
   width: 100%;
-  padding: 16px 14px 16px 44px;
+  padding: 16px 14px 16px 22px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
@@ -411,14 +408,15 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .info-container {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  padding-left: 60px;
   font-size: 20px;
+  padding: 64px 64px 32px 64px;
 }
 
 .edit-delete-container {
@@ -457,7 +455,7 @@
   display: none;
   position: absolute;
   right: 8px;
-  bottom: 116px;
+  bottom: 124px;
   height: 100px;
   width: 116px;
   border-radius: 16px 16px 0 16px;
@@ -493,7 +491,6 @@
   flex-direction: column;
   transform: translateX(1300px);
   transition: transform 250ms ease-in;
-  padding-top: 40px;
 }
 
 .translatex-user {
@@ -527,7 +524,7 @@ h3 {
 }
 
 .information-field {
-  margin: 40px 0px 50px;
+  margin: 24px 0px 24px;
 }
 
 .users-field {
@@ -623,14 +620,19 @@ h3 {
   }
 
   .info-container {
-    padding-left: 24px;
+    padding: 40px 0 0 24px;    
   }
 }
 
 @media (max-width: 992px) {
+  body {
+    flex-direction: column-reverse;
+  }
+
   .modal {
     flex-direction: column;
-    width: 480px;
+    max-width: 480px;
+    width: 100%;
     height: 720px;
     justify-content: space-evenly;
   }
@@ -644,7 +646,7 @@ h3 {
 
   .modal-left-close {
     padding-top: 24px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     height: auto;
     display: flex;
     flex-direction: row-reverse;
@@ -665,7 +667,7 @@ h3 {
 
   .modal-right {
     width: 100%;
-    height: 55%;
+    height: 60%;
     padding: 24px;
   }
 
@@ -699,6 +701,7 @@ h3 {
   }
 
   .contact-field {
+    margin-bottom: 80px;
     display: none;
     margin-top: 96px;
     position: absolute;
@@ -735,6 +738,10 @@ h3 {
     display: none;
   }
 
+  .contacts-bar {
+    padding: 40px 16px 40px 16px;
+  }
+
   .open-edit-delete {
     display: block;
   }
@@ -742,48 +749,54 @@ h3 {
   .user-edit-container {
     display: block;
   }
-}
 
-@media (max-width: 580px) {
-  .modal {
-    flex-direction: column;
-    width: 380px;
-    height: 640px;
-    justify-content: space-evenly;
-  }
-
-  .modal-left {
-    padding: 0 16px 16px 16px;
+  .modal  {
+    height: 656px;
   }
 
   .avatar-container {
     margin-bottom: 16px;
   }
-
-  .buttons {
-    margin: 24px 0 0 0;
-  }
 }
 
-@media (max-width: 416px) {
-  .modal {
-    flex-direction: column;
-    width: 308px;
-    height: 640px;
-    justify-content: space-evenly;
+@media (max-width: 480px) {
+  .modal-left h2 {
+    font-size: 2.5rem;
   }
 
-  .user-name-container {
-    gap: 8px;
+  .avatar-container {
+    display: flex;
+    justify-content: center;
+    width: 115px;
+  }
+
+  .input-group-contact input::placeholder {
+    font-size: 14px;
   }
 
   .avatar-circle {
-    height: 80px;
-    width: 80px;
-    font-size: 24px;
+    height: 108px;
+    width: 108px;
+    font-size: 40px;
   }
 
-  .user-name h3 {
-    font-size: 24px;
+  .user-name-container {
+    gap: 16px;
+  }
+
+  .contact-title {
+    padding: 16px 16px;
+  }
+
+  .info-container {
+    padding: 16px;
+  }
+
+  .modal-right {
+    height: 58%;
+  }
+
+  .buttons button {
+    font-size: 14px;
   }
 }
