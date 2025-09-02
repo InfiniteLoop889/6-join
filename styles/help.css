@@ -4,12 +4,14 @@
     margin: 15px;
     padding: 40px 35px;
 }
+
 .header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
 }
+
 .back-button {
     background: none;
     border: none;
@@ -18,32 +20,38 @@
     cursor: pointer;
     padding: 10px;
 }
+
 .back-button:hover {
     background-color: #e3f2fd;
     border-radius: 50%;
 }
+
 h1 {
     font-size: 3.5rem;
     font-weight: 700;
     color: #2c3e50;
     margin-bottom: 30px;
 }
+
 h2 {
     font-size: 2.2rem;
     font-weight: 600;
     color: #2c3e50;
     margin: 10px 0 10px 0;
 }
+
 p {
     font-size: 1.1rem;
     margin-bottom: 10px;
     color: #555;
 }
+
 .join-link {
     color: #4A90E2;
     text-decoration: none;
     font-weight: 500;
 }
+
 .step {
     margin: 30px 0;
 }
@@ -55,6 +63,7 @@ p {
     display: inline-block;
     min-width: 40px;
 }
+
 .step-number {
     font-size: 1.8rem;
     font-weight: 700;
@@ -63,6 +72,7 @@ p {
     display: inline-block;
     min-width: 40px;
 }
+
 .step-title {
     font-size: 1.4rem;
     font-weight: 600;
@@ -70,102 +80,29 @@ p {
     margin-bottom: 10px;
     display: inline-block;
 }
+
 .step-content {
     margin-left: 60px;
     font-size: 1.1rem;
     color: #555;
     line-height: 1.7;
 }
+
 .warning {
     margin: 30px 0;
 }
+
 .contact-info {
+  
     border-left: 4px solid #28a745;
     padding: 15px 20px;
     margin: 30px 0;
     border-radius: 4px;
 }
+
 .final-message {
     font-size: 2rem;
     font-weight: 600;
     color: #2c3e50;
 }
-.logo {
-    display: none;
-}
-.help-page {
-    display: none;
-}
-  .back-button {
-    display: none;
-}
-.back-button {
-    display: flex;
-}
 
-@media(max-width: 992px) {
-    .main-flexbox {
-        display: flex;
-        flex-direction: column-reverse;
-    }
-    .navbar h2 {
-        margin-left: 32px;
-    }
-}
-  
-@media (max-width: 590px) {
-    .navbar h2 {
-    display: none;
-    }
-    .help-symbol {
-    display: none !important;
-      }
-    .join-logo-nav {
-    display: flex !important;
-      }
-}
-
-  @media (max-width: 425px) {
-    .step-content {
-        margin-left: 40px;
-    }
-    .step-number {
-        margin-right: 0px;
-        font-size: 1.6rem;
-        min-width: 35px;
-    }
-}
-
-@media(max-width: 360px) {
-    .navbar h2 {
-        display: none;
-      }
-      .logo {
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        height: 40px;
-        width: 40px;
-      }
-      .help-symbol {
-        display: none !important;
-      }
-      .navbar {
-        padding: 0 20px 0 16px !important;
-        justify-content: space-between !important;
-      }
-      .nav-imgs {
-        justify-content: space-between;
-      }
-      .header h1 {
-        font-size: 3rem;
-      }
-      .step-title {
-        font-size: 1.3rem;
-      }
-      .step-number {
-        margin-right: 0px;
-        font-size: 1.4rem;
-        min-width: 32px;
-      }
-}

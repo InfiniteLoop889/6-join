@@ -26,27 +26,6 @@ main {
   height: 100vh;
 }
 
-.btn-div {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
-
-.back-button {
-    background: none;
-    border: none;
-    color: #4A90E2;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.back-button:hover {
-    background-color: #e3f2fd;
-    border-radius: 50%;
-}
-
-
 .privacy-section {
   max-width: 1440px;
 }

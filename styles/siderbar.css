@@ -105,7 +105,7 @@ a {
 
 @media (max-width: 680px) {
   main {
-    /* margin-top: 96px; */
+    margin-top: 96px;
     flex-grow: 0;
     overflow-y: scroll;
   }

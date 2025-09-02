@@ -651,10 +651,35 @@ Media queries Board
     width: 100%;
   }
 
-  /* .task-wrapper {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
+  .add-btn-desktop {
+    display: none;
+  }
+
+  .column-header img:first-of-type {
+    display: none;
+  }
+
+  .repo-task-btn {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .board-wrapper {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .board-header {
+    display: block;
+  }
+
+  .mobile-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .add-btn-mobile {
+    padding: 10px;
   }
 
   .search-field::placeholder {

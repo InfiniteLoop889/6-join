@@ -38,10 +38,6 @@ function toggleAnimation() {
   });
 }
 
-function toggleMenu () {
-  const menu = document.getElementById("menu");
-}
-
 function onclickProtection(event) {
   event.stopPropagation();
 }
