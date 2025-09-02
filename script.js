@@ -138,6 +138,9 @@ function isPrivacyMessage() {
 function adjustLayoutForPrivacyView() {
   const ul = document.querySelector(".nav-wrapper").children[0];
   const navImg = document.querySelector(".nav-imgs");
+  const pageATag = document.querySelector(".page-header");
+  pageATag.children[1].remove();
+  
   navImg.innerHTML = "";
   ul.innerHTML = "";
   ul.innerHTML += navLink("login", "../index.html", "Log in");
