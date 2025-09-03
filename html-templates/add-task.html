@@ -16,8 +16,8 @@
 
     <script src="../scripts/api.js"></script>
     <script src="../scripts/templates.js"></script>
-    <script src="../scripts/add-task.js"></script>
     <script src="../script.js"></script>
+    <script src="../scripts/add-task.js"></script>
 </head>
 
 <body onload="initAddTaskPage(); initializeNavbar()">
@@ -57,7 +57,8 @@
         </nav>
     </div>
 
-    <main id="right-content-wrapper">
+    <main id="right-content-wrapper">                  
+        </div>
         <section id="navbar">
             <nav class="navbar">
                 <img class="join-logo-nav" src="../assets/icons/join-logo.svg" alt="join logo">
@@ -103,7 +104,9 @@
             </div>
         </div>
     </main>
-
+    <div class="success-message">        
+        <div class="message-task">Task created</div>
+    </div>
 </body>
 
 </html>

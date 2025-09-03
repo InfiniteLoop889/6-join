@@ -91,7 +91,7 @@
                     <div class="mobile-header">
                         <h1>Board</h1>
                         <!-- mobile button -->
-                        <button class="add-btn add-btn-mobile hidden" id="add-task-btn-mobile" onclick="goToAddTaskPage('to-do')">
+                        <button class="add-btn add-btn-mobile hidden" id="add-task-btn-mobile" onclick="goTokPage('to-do', 'add-task')">
                             <span class="add-task-text">Add task</span>
                             <img src="../assets/icons/add.svg" alt="Add" class="add-icon">
                         </button>
@@ -125,7 +125,7 @@
                             <h3>To do</h3>
                             <img src="../assets/icons/plus_button.svg" alt="plus-button" onclick="addTask('to-do')">
                             <img class="repo-task-btn" src="../assets/icons/plus_button.svg" alt="plus-button"
-                                onclick="goToAddTaskPage('to-do')">
+                                onclick="goTokPage('to-do', 'add-task')">
                         </div>
                         <div class="task-wrapper" data-category="to-do" ondragover="placeholderHover(event)"></div>
                     </div>
@@ -134,9 +134,9 @@
                         <div class="column-header">
                             <h3>In progress</h3>
                             <img src="../assets/icons/plus_button.svg" alt="plus-button"
-                                onclick="addTask('in-progress')">
+                                onclick="addTask('in-progress', 'add-task')">
                             <img class="repo-task-btn" src="../assets/icons/plus_button.svg" alt="plus-button"
-                                onclick="goToAddTaskPage('in-progress')">
+                                onclick="goTokPage('in-progress', 'add-task')">
 
                         </div>
                         <div class="task-wrapper" data-category="in-progress" ondragover="placeholderHover(event)">
@@ -149,7 +149,7 @@
                             <img src="../assets/icons/plus_button.svg" alt="plus-button"
                                 onclick="addTask('await-feedback')">
                             <img class="repo-task-btn" src="../assets/icons/plus_button.svg" alt="plus-button"
-                                onclick="goToAddTaskPage('await-feedback')">
+                                onclick="goTokPage('await-feedback', 'add-task')">
                         </div>
                         <div class="task-wrapper" data-category="await-feedback" ondragover="placeholderHover(event)">
                         </div>

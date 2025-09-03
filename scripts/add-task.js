@@ -40,6 +40,7 @@ function preventFromSubmit(event) {
 function loadTaskFormTemplate(firstTarget, secondTarget) {
   let firstContainer = document.getElementById(firstTarget);
   let secondContainer = document.getElementById(secondTarget);
+  removeAssignment();
   firstContainer.innerHTML = "";
   secondContainer.innerHTML = "";
   firstContainer.innerHTML += titleTaskTpl();
@@ -49,6 +50,13 @@ function loadTaskFormTemplate(firstTarget, secondTarget) {
   secondContainer.innerHTML += assignedTaskTpl();
   secondContainer.innerHTML += categoryTaskTpl();
   secondContainer.innerHTML += subtaskTpl();
+}
+
+function removeAssignment() {
+  assignedUserArr = [];
+  users.forEach((user) => {
+    user.assigned = false;
+  });
 }
 
 function getAssigneeRefs() {
@@ -146,7 +154,10 @@ function prioBtnOff(btn, icon, priority) {
 function addSubtask() {
   const inputElement = document.getElementById("subtask-input");
   const subList = document.getElementById("sub-list");
-  if (inputElement.value.length == 0) return;
+  if (inputElement.value.trim().length == 0) {
+    inputElement.value = "";
+    return
+  };
   let id = getNextFreeId();
   subtask.push(createSubObj(id, inputElement.value));
   subList.innerHTML += subListItem(inputElement.value, id);
@@ -184,7 +195,7 @@ function editSubItem(id, editMode) {
   for (let index = 0; index < subtask.length; index++) {
     if (subtask[index].id == id) {
       subtask[index].edit = editMode;
-      if (input.value.length > 0) {
+      if (input.value.trim().length > 0) {
         subtask[index].value = input.value;
       }
       break;
@@ -266,7 +277,7 @@ function loadAssignedUserIcons() {
   const rest = Math.max(assignedUserArr.length - 4, 0);
   let userTempArr = firstFour.map(u => userIcon(u.color, initialsFromName(u.name), u.name));
   let html = userTempArr.join("");
-  
+
   if (rest > 0) {
     html += assignedUserIcon("#2a3647", `+${rest}`);
   }
@@ -293,6 +304,7 @@ async function createTaskForm() {
     taskStatus
   );
   await postData("tasks", task);
+  animationSuccess();
 }
 
 function runInitIfValid() {
@@ -392,4 +404,12 @@ function onFocusOut(e) {
   let target = e.target;
   target.classList.remove("light-red-outline");
   target.classList.remove("blue-outline");
+}
+
+function animationSuccess() {
+  const successMessage = document.querySelector(".success-message");
+  successMessage.classList.add("is-open");
+  setTimeout(() => {
+    goTokPage(taskStatus, "board");
+  }, 1600);
 }
