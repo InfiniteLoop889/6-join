@@ -41,13 +41,19 @@ function userIcon(color = "red", initials = "xx", name = "xx") {
     `;
 }
 
+function assignedUserIcon(color, initials) {
+    return `
+        <div class="user-icon" style="background-color: ${color}">${initials}</div>
+    `;
+}
+
 function titleTaskTpl(title = "") {
   return `
         <div class="task-container">
             <label for="titleInput" class="task-name">
                 Title<span class="red-font">*</span>
             </label>
-            <input type="text" class="input-task" id="titleInput" placeholder="Enter a title" value="${title}">
+            <input type="text" class="input-task" id="titleInput" placeholder="Enter a title" value="${title}" maxlength="38">
             <span id="titleError" class="error-message"></span>
         </div>
     `;
@@ -57,7 +63,7 @@ function descriptionTaskTpl(description = "") {
   return `
         <div class="task-container">
             <label for="description-input" class="task-name">Description</label>
-            <textarea id="description" class="textarea-description">${description}</textarea>
+            <textarea id="description" class="textarea-description" maxlength="148">${description}</textarea>
         </div>
     `;
 }
@@ -100,10 +106,10 @@ function assignedTaskTpl() {
   return `
         <div class="task-container" id="task-container">
             <span class="task-name">Assigned to:</span>
-            <div class="input-container">
+            <div class="input-container" onclick="toggleAssignedDropdown()">
                 <input type="text" id="assignedInputSearch" placeholder="Search for user" value="Select contacts to assign"
-                    class="input-assaign" oninput="filterUsers(value)" disabled>
-                <button type="button" class="btn-dropdown" id="assaign-btn" onclick="toggleAssignedDropdown()">
+                    class="input-assaign" oninput="filterUsers(value)">
+                <button type="button" class="btn-dropdown" id="assaign-btn">
                     <img src="../assets/icons/arrow_drop_down.svg" alt="">
                 </button>
             </div>

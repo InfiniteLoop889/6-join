@@ -63,7 +63,6 @@ function getAssigneeRefs() {
 
 function toggleAssignedDropdown() {
   const refs = getAssigneeRefs();
-  refs.input.disabled = false;
   refs.input.value = "";
   loadUsers();
   refs.taskContainer.classList.toggle("zindex-12");
@@ -92,7 +91,6 @@ function resetAssigneeFilter() {
   const userContainers = document.querySelectorAll(
     '[data-type="userContainer"]'
   );
-  refs.input.disabled = true;
   refs.input.value = "Select contacts to assign";
   userContainers.forEach((container) => {
     container.classList.remove("d-none");
@@ -241,13 +239,13 @@ function assignedUser(name) {
   if (users[index].assigned == false) {
     users[index].assigned = true;
     loadUsers();
-    loadAssignedUserIcons();
     assignedUserArr.push(users[index]);
+    loadAssignedUserIcons();
   } else {
     users[index].assigned = false;
     loadUsers();
-    loadAssignedUserIcons();
     removeUserFromArray(name);
+    loadAssignedUserIcons();
   }
   filterUsers(refs.input.value);
 }
@@ -262,13 +260,17 @@ function searchUserIndex(name) {
 
 function loadAssignedUserIcons() {
   const container = document.getElementById("icons-container");
-  container.innerHTML = "";
-  users.forEach((user) => {
-    if (user.assigned) {
-      let initials = initialsFromName(user.name);
-      container.innerHTML += userIcon(user.color, initials, user.name);
-    }
-  });
+  if (!container) return;
+
+  const firstFour = assignedUserArr.slice(0, 4);
+  const rest = Math.max(assignedUserArr.length - 4, 0);
+  let userTempArr = firstFour.map(u => userIcon(u.color, initialsFromName(u.name), u.name));
+  let html = userTempArr.join("");
+  
+  if (rest > 0) {
+    html += assignedUserIcon("#2a3647", `+${rest}`);
+  }
+  container.innerHTML = html;
 }
 
 function removeUserFromArray(name) {
