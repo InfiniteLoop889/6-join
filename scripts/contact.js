@@ -236,22 +236,12 @@ function closeEditMenu() {
 }
 
 function toggleContactBg(e) {
-    const contacts = document.querySelectorAll(".contact");
+    const contacts = document.querySelectorAll(".contact, .contact-dark-blue");
     
     contacts.forEach(contact => {
-        contact.classList.remove("contact-dark-blue");
+        contact.className = "contact";
     });
-    if (!e) return;
-    e.currentTarget.classList.add("contact-dark-blue");   
-}
-
-function contacMuseover(e) {
-    let target = e.currentTarget;
-    target.classList.contains("contact-dark-blue") ? target.style.backgroundColor = "" : target.style.backgroundColor = "#d1d1d1";
-}
-
-function contactMouseout(e) {
-    e.currentTarget.style.backgroundColor = "";
+    e.currentTarget.className = "contact-dark-blue";   
 }
 
 document.addEventListener("DOMContentLoaded", () => {

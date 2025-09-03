@@ -381,12 +381,6 @@ function responsiveEditMenu(id) {
 function createContactElement(user, id) {
   const div = document.createElement("div");
   div.classList.add("contact");
-  div.addEventListener("mouseover", (event) => {
-    contacMuseover(event);
-  });
-  div.addEventListener("mouseout", (event) => {
-    contactMouseout(event);
-  });
   div.addEventListener("click", (event) => {
     openUserInfos(id);
     toggleContactBg(event);
