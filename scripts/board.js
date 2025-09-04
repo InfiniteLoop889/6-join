@@ -67,23 +67,7 @@ function checkForSubtask(subtasks) {
 function checkForAssignment(assignedUserArr) {
   if (assignedUserArr) {
     let personHTML = "";
-    const maxVisible = 4;
     const total = assignedUserArr.length;
-
-    // assignedUserArr.forEach((userObj, index) => {
-    //   if (index < 4) {
-    //     let username = createUsernameAbbreviation(userObj);
-    //     personHTML += createPersonTemplate(userObj, username);
-    //   } else if (index === 4) {
-    //     if (total > maxVisible) {
-    //       const moreCount = total - 4;
-    //       personHTML += createMorePersonsTemplate(moreCount);
-    //     } else {
-    //       let username = createUsernameAbbreviation(userObj);
-    //       personHTML += createPersonTemplate(userObj, username);
-    //     }
-    //   }
-    // });
 
     for (let i = 0; i < total; i++) {
       const user = assignedUserArr[i];
@@ -96,7 +80,6 @@ function checkForAssignment(assignedUserArr) {
         break;
       }
     }
-
     return personHTML;
   } else {
     return "";
@@ -220,11 +203,14 @@ async function searchTasks() {
 
 function checkIfNoResults(totalTaskCount, hiddenTaskElements) {
   let noResultsRef = document.querySelector(".no-results");
+  let doneLastChild = document.querySelector('.column[data-task="done"]');
 
   if (totalTaskCount === hiddenTaskElements.length) {
     noResultsRef.classList.remove("hidden");
+    doneLastChild.classList.add("no-padding-bottom");
   } else {
     noResultsRef.classList.add("hidden");
+    doneLastChild.classList.remove("no-padding-bottom");
   }
 }
 

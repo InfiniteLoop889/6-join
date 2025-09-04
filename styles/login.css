@@ -147,6 +147,7 @@ Media queries
   }
 
   .login-container {
+    margin-top: 80px;
     padding: 30px 40px;
   }
 

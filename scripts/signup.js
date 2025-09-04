@@ -12,6 +12,7 @@ function errorFields() {
     name: document.querySelector('[data-field="errorName"]'),
     email: document.querySelector('[data-field="errorEmail"]'),
     password: document.querySelector('[data-field="errorPassword"]'),
+    policy: document.querySelector('[data-field="errorPolicy"]'),
   };
 }
 
@@ -44,7 +45,7 @@ function comparePasswords(password, confirmPassword) {
     return false;
   }
   if (password.value.length < 3) {
-    errorElements.password.innerHTML = "Passwords length is to short";
+    errorElements.password.innerHTML = "Please enter a password.";
     addRedOutline(inputContainer[2]);
     addRedOutline(inputContainer[3]);
     return false;
@@ -129,6 +130,7 @@ async function checkFormFields() {
   }
   let passwordsMatch = comparePasswords(inputs.password, inputs.confirmPassword);
   let checkbox = checkPrivacy();
+  showPrivacyError(!checkbox);
   if (!nameIsValid || !emailIsValid || !emailAvailable || !passwordsMatch || !checkbox) return false;
   return true;
 }
@@ -136,6 +138,15 @@ async function checkFormFields() {
 function checkPrivacy() {
   const checkbox = document.getElementById("privacyCheckbox");
   return checkbox.checked;
+}
+
+function showPrivacyError(show) {
+  const errorElem = document.querySelector('.error-signup[data-field="errorPolicy"]');
+  if (show) {
+    errorElem.textContent = "Please accept the privacy policy.";
+  } else {
+    errorElem.textContent = "";
+  }
 }
 
 function toggleLockIcon(e, lockId, eyeId) {

@@ -62,6 +62,7 @@ body {
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
+  margin-top: 60px;
 }
 
 .signup-container {
@@ -116,7 +117,11 @@ body {
 
 .checkbox-container {
   color: #a8a8a8;
-  padding: 18px 10px 30px;
+  padding: 18px 10px 20px;
+}
+
+.error-signup-policy {
+  text-align: center;
 }
 
 .primary {

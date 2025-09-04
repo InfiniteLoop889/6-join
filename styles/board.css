@@ -145,7 +145,7 @@ Board
   overflow-wrap: break-word;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: box-shadow ease 150ms;
+  transition: box-shadow ease 250ms;
 }
 
 .task p {
@@ -298,7 +298,7 @@ Overlay
 
   /* fade-in / fade-out effect  */
   opacity: 0;
-  transition: opacity 150ms ease;
+  transition: opacity 250ms ease;
 }
 
 .visible {
@@ -317,7 +317,7 @@ Overlay
 
   /* translate(-50%, -50%) is for centering the overlay-wrapper in the correct position */
   transform: translate(-50%, -50%);
-  transition: all 150ms ease-in-out;
+  transition: all 250ms ease-in-out;
 }
 
 .overlay-outer {
@@ -544,7 +544,7 @@ Add-Task
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transition: all 150ms ease-in-out;
+  transition: all 250ms ease-in-out;
 }
 
 .transit {
@@ -789,7 +789,36 @@ Media queries Board
     padding: 0 !important;
   }
 
+  .board {
+    height: auto;
+  }
+
   .column:last-child {
-    margin-bottom: 64px;
+    padding-bottom: 64px;
+  }
+
+  .no-padding-bottom {
+    padding-bottom: 0 !important;
+  }
+
+  .no-results {
+    margin-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .mb-14 {
+    margin-bottom: 8px;
+  }
+
+  .assigned-list {
+    max-height: 100px;
+  }
+
+  .subtasks {
+    max-height: 70px;
+  }
+
+  .overlay-content p {
+    max-height: calc(1.2em * 3);
   }
 }
