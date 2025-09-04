@@ -228,6 +228,10 @@ function createPersonTemplate(userObj, username) {
   return `<span class="avatar" style="background: ${userObj.color};" > ${username}</span>`;
 }
 
+function createMorePersonsTemplate(remainingCount) {
+  return `<span class="remaining-person-badge more-persons">+${remainingCount}</span>`;
+}
+
 function createTaskPlaceholder() {
   return `<div class="empty">No tasks To do</div>`;
 }

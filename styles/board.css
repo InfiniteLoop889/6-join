@@ -4,6 +4,7 @@ Board header
 
 .board-wrapper {
   max-width: 1440px;
+  height: 100%;
   margin: 64px 64px 32px 64px;
 }
 
@@ -100,6 +101,7 @@ Board
 .board {
   display: flex;
   gap: 16px;
+  height: 100%;
 }
 
 .no-select {
@@ -239,6 +241,20 @@ Board
   height: 32px;
   font-size: 12px;
   color: #fff;
+  margin-right: -6px;
+}
+
+.remaining-person-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  color: #fff;
+  background-color: #2a3647;
   margin-right: -6px;
 }
 
@@ -713,20 +729,20 @@ Media queries Board
     padding: 10px;
   }
 
-  .search-field::placeholder {
+  /* .search-field::placeholder {
     font-size: 14px;
-  }
+  } */
 
   .board h3 {
     font-size: 17px;
   }
 
-  .empty {
+  /* .empty {
     font-size: 14px;
-  }
+  } */
 
   .overlay-content {
-    font-size: 14px;
+    /* font-size: 14px; */
     padding: 24px;
   }
 
@@ -753,10 +769,10 @@ Media queries Board
     font-size: 10px;
   }
 
-  .task h4,
+  /* .task h4,
   p {
     font-size: 14px;
-  }
+  } */
 
   .progress {
     height: 5px;
