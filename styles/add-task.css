@@ -9,7 +9,7 @@
 
 .success-message {
   inset: 0;
-  background: rgba(0,0,0,.7);
+  background: rgba(0, 0, 0, 0.7);
   position: fixed;
   z-index: 10;
   display: flex;
@@ -21,7 +21,7 @@
 
 .success-message.is-open {
   pointer-events: auto;
-  animation: fadeIn .25s ease forwards;
+  animation: fadeIn 0.25s ease forwards;
 }
 
 .message-task {
@@ -35,11 +35,13 @@
 }
 
 .success-message.is-open .message-task {
-  animation: slideIn .25s ease-out .15s forwards;
+  animation: slideIn 0.25s ease-out 0.15s forwards;
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
@@ -181,7 +183,7 @@ button div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .input-assaign {
@@ -612,7 +614,7 @@ button div {
   flex-direction: row;
   padding: 8px 16px 8px 16px;
   background-color: white;
-  font-size: 14px;
+  /* font-size: 14px; */
   border-bottom: 2px solid #29abe2;
 }
 
@@ -760,13 +762,13 @@ button div {
     gap: 16px;
   }
 
-  .task-name {
+  /* .task-name {
     font-size: 14px;
-  }
+  } */
 
-  .priority-btn-container button {
+  /* .priority-btn-container button {
     font-size: 14px;
-  }
+  } */
 
   .btn-priority {
     height: 40px;
@@ -795,33 +797,33 @@ button div {
     padding: 0px;
   }
 
-  .input-container {
+  /* .input-container {
     font-size: 14px;
-  }
+  } */
 
-  .single-user-container {
+  /* .single-user-container {
     font-size: 14px;
-  }
+  } */
 
   /* input::placeholder {
     font-size: 14px;
   } */
 
-  .sub-item input {
+  /* .sub-item input {
     font-size: 14px;
-  }
+  } */
 
   .error-message {
-    font-size: 14px;
+    /* font-size: 14px; */
     height: 14px;
   }
 
-  .input-task {
+  /* .input-task {
     font-size: 14px;
-  }
+  } */
 
   .task-controls {
-    font-size: 14px;
+    /* font-size: 14px; */
     flex-direction: column;
     align-items: flex-start;
   }

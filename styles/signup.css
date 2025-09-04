@@ -1,3 +1,13 @@
+.max-width-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+}
+
 body {
   background-color: #f4f5f7;
   flex-direction: column;
@@ -52,6 +62,7 @@ body {
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
+  margin-top: 60px;
 }
 
 .signup-container {
@@ -106,7 +117,11 @@ body {
 
 .checkbox-container {
   color: #a8a8a8;
-  padding: 18px 10px 30px;
+  padding: 18px 10px 20px;
+}
+
+.error-signup-policy {
+  text-align: center;
 }
 
 .primary {
@@ -177,9 +192,15 @@ body {
   color: #7073758d;
 }
 
-.Legal-texts :hover {
+.Legal-texts btn {
+  color: inherit;
+  text-decoration: none;
+}
+
+.Legal-texts btn:hover {
   color: #28abe2;
   font-weight: 600;
+  cursor: pointer;
 }
 
 /* -------------------------------------------

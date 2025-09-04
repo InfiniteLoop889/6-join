@@ -11,25 +11,26 @@ function renderBoard(tasks) {
       if (!categories[task[1].status]) categories[task[1].status] = [];
       categories[task[1].status].push(task);
     });
-
-    // console.log(categories);
-
-    for (let status in categories) {
-      let column = document.querySelector(`.column[data-task="${status}"]`);
-      let taskWrapper = column.querySelector(".task-wrapper");
-
-      if (taskWrapper) {
-        // "a[1].order ?? 0" means: If a[1].order is not defined or null, use 0
-        let sortedTasks = categories[status].sort((a, b) => (a[1].order ?? 0) - (b[1].order ?? 0));
-
-        sortedTasks.forEach((task) => {
-          let taskTemplate = createTaskTemplate(task[0], task[1]);
-          taskWrapper.innerHTML += taskTemplate;
-        });
-      }
-    }
+    loopThroughCategories(categories);
   }
   addPlaceholdersToEmptyColumns();
+}
+
+function loopThroughCategories(categories) {
+  for (let status in categories) {
+    let column = document.querySelector(`.column[data-task="${status}"]`);
+    let taskWrapper = column.querySelector(".task-wrapper");
+
+    if (taskWrapper) {
+      // "a[1].order ?? 0" means: If a[1].order is not defined or null, use 0
+      let sortedTasks = categories[status].sort((a, b) => (a[1].order ?? 0) - (b[1].order ?? 0));
+
+      sortedTasks.forEach((task) => {
+        let taskTemplate = createTaskTemplate(task[0], task[1]);
+        taskWrapper.innerHTML += taskTemplate;
+      });
+    }
+  }
 }
 
 function removeTasks() {
@@ -66,10 +67,19 @@ function checkForSubtask(subtasks) {
 function checkForAssignment(assignedUserArr) {
   if (assignedUserArr) {
     let personHTML = "";
-    assignedUserArr.forEach((userObj) => {
-      let username = createUsernameAbbreviation(userObj);
-      personHTML += createPersonTemplate(userObj, username);
-    });
+    const total = assignedUserArr.length;
+
+    for (let i = 0; i < total; i++) {
+      const user = assignedUserArr[i];
+      if (i < 4) {
+        let username = createUsernameAbbreviation(user);
+        personHTML += createPersonTemplate(user, username);
+      } else {
+        let remainingPersons = total - 4;
+        personHTML += createMorePersonsTemplate(remainingPersons);
+        break;
+      }
+    }
     return personHTML;
   } else {
     return "";
@@ -193,11 +203,14 @@ async function searchTasks() {
 
 function checkIfNoResults(totalTaskCount, hiddenTaskElements) {
   let noResultsRef = document.querySelector(".no-results");
+  let doneLastChild = document.querySelector('.column[data-task="done"]');
 
   if (totalTaskCount === hiddenTaskElements.length) {
     noResultsRef.classList.remove("hidden");
+    doneLastChild.classList.add("no-padding-bottom");
   } else {
     noResultsRef.classList.add("hidden");
+    doneLastChild.classList.remove("no-padding-bottom");
   }
 }
 
@@ -423,7 +436,7 @@ function closeAddTaskMobile() {
         addTask.classList.toggle("transparent-background");
         container.classList.toggle("transit");
         addTask.classList.toggle("d-none");
-      };
+      }
     }
-  })
+  });
 }

@@ -42,7 +42,7 @@ function userIcon(color = "red", initials = "xx", name = "xx") {
 }
 
 function assignedUserIcon(color, initials) {
-    return `
+  return `
         <div class="user-icon" style="background-color: ${color}">${initials}</div>
     `;
 }
@@ -226,6 +226,10 @@ function progessTemplate(subtasks, numerus, subtaskDone) {
 
 function createPersonTemplate(userObj, username) {
     return `<span class="avatar" style="background: ${userObj.color};" > ${username}</span>`;
+}
+
+function createMorePersonsTemplate(remainingCount) {
+  return `<span class="remaining-person-badge more-persons">+${remainingCount}</span>`;
 }
 
 function createTaskPlaceholder() {

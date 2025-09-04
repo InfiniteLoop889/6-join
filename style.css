@@ -2,9 +2,9 @@
   display: none !important;
 }
 
-main {
+/* main {
   background-color: #f6f7f8;
-}
+} */
 
 .page-header {
   display: flex;
@@ -85,15 +85,15 @@ main {
 }
 
 @media (max-width: 590px) {
-    .support-container {
-        padding: 0px;
-        margin: 64px 32px;
-    }
+  .support-container {
+    padding: 0px;
+    margin: 64px 32px;
+  }
 }
 
 @media (max-width: 480px) {
-    .support-container {
-        padding: 0px;
-        margin: 64px 16px 32px 16px;
-    }
+  .support-container {
+    padding: 0px;
+    margin: 64px 16px 32px 16px;
+  }
 }
