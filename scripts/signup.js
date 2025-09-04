@@ -4,6 +4,7 @@ function formFields() {
     email: document.querySelector('[data-field="email"]'),
     password: document.querySelector('[data-field="password"]'),
     confirmPassword: document.querySelector('[data-field="confirmPassword"]'),
+    phone: document.querySelector('[data-field="phone"]'),
   };
 }
 
@@ -12,6 +13,7 @@ function errorFields() {
     name: document.querySelector('[data-field="errorName"]'),
     email: document.querySelector('[data-field="errorEmail"]'),
     password: document.querySelector('[data-field="errorPassword"]'),
+    phone: document.querySelector('[data-field="errorPhone"]'),
   };
 }
 

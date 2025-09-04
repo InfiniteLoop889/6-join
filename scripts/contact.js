@@ -12,22 +12,72 @@ async function userExists(email) {
     }
 }
 
+function contactFormIds() {
+    return {
+        "email": document.getElementById("contact-email"),
+        "name": document.getElementById("contact-name"),
+        "phone": document.getElementById("contact-phone"),
+    }
+}
+
 async function initContactForm() {
+    const inputs = formFields();
+    const inputIds = contactFormIds();
     const form = document.querySelector("form.contact-container");
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        let email = document.getElementById("contact-email");
+        let validateUser = await validateNewUser();
+        if (!validateUser) return
         const newUser = createUser(
             document.getElementById("contact-name").value,
-            email.value,
+            inputIds.email.value,
             document.getElementById("contact-phone").value,
         );
-        let checkEmail = await userExists(email);
-        if (checkEmail) return
         await postData(`users`, newUser);
         loadContacts();
         closeOverlay();
     });
+}
+
+async function validateNewUser(oldUser = false) {
+    let inputs = formFields();
+    
+    let emailAvailable = oldUser ? true : false;
+
+    let nameIsValid = checkName(inputs.name.value);
+    let emailIsValid = validateEmail(inputs.email.value);
+    if (!emailIsValid) errorEmail();
+
+    if (emailIsValid && !oldUser) {
+        emailAvailable = await checkEmailExists(inputs.email.value);
+    }
+
+    let phoneIsValid = validatePhoneNumber(inputs.phone.value);
+    if (!phoneIsValid) errorPhoneNumber();
+
+    if (!nameIsValid || !emailIsValid || !emailAvailable || !phoneIsValid) return false;
+    return true;
+}
+
+function validatePhoneNumber(input) {
+    let validate = true;
+    if (typeof input !== 'string') return false;
+    if (/[^0-9()\s+\-]/.test(input)) return false;
+    let phone = input.replace(/[()\s\-]/g, '');
+    if (phone.startsWith('+')) {
+        phone = '+' + phone.slice(1).replace(/\+/g, '');
+    } else {
+        phone = phone.replace(/\+/g, '');
+    }
+    validate = /^\+?\d{7,15}$/.test(phone);
+    return validate;
+}
+
+function errorPhoneNumber() {
+    const inputContainer = document.querySelectorAll(".input-container");
+    let errorElements = errorFields();
+    errorElements.phone.innerHTML = "Please enter a valid phone number";
+    addRedOutline(inputContainer[2]);
 }
 
 function getValue(id) {
@@ -93,6 +143,10 @@ function editForm(id, user) {
     editAvatar(user);
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        let validateUser = await validateNewUser(true);
+        console.log(validateUser);
+
+        if (!validateUser) return
         const updateUser = createUser(
             document.getElementById("contact-name").value,
             document.getElementById("contact-email").value,
@@ -237,16 +291,30 @@ function closeEditMenu() {
 
 function toggleContactBg(e) {
     const contacts = document.querySelectorAll(".contact, .contact-dark-blue");
-    
     contacts.forEach(contact => {
         contact.className = "contact";
     });
-    e.currentTarget.className = "contact-dark-blue";   
+    if (!e) return
+    e.currentTarget.className = "contact-dark-blue";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", () => {
         const contactField = document.querySelector(".contact-field");
-        contactField.style.display = window.innerWidth > 860 ?  "block" : "none";
+        contactField.style.display = window.innerWidth > 860 ? "block" : "none";
     });
 });
+
+function checkForError(event) {
+    let container = event.currentTarget;
+    let inputName = container.children[0].getAttribute("name");
+    inputName = inputName.charAt(0).toUpperCase() + inputName.slice(1);
+
+    let errorField = document.querySelector(`[data-field="error${inputName}"]`);
+    let errorMessage = container.classList.contains("light-red-outline");
+
+    if (errorMessage) {
+        container.classList.remove("light-red-outline");
+        errorField.innerHTML = "";
+    }
+}
