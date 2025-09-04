@@ -177,9 +177,15 @@ body {
   color: #7073758d;
 }
 
-.Legal-texts :hover {
+.Legal-texts btn {
+  color: inherit;
+  text-decoration: none;
+}
+
+.Legal-texts btn:hover {
   color: #28abe2;
   font-weight: 600;
+  cursor: pointer;
 }
 
 /* -------------------------------------------

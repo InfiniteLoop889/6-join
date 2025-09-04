@@ -87,7 +87,10 @@ function closeAddTask() {
 async function renderUserIcon() {
   const element = document.querySelector(".profile-picture");
   let params = new URLSearchParams(window.location.search);
-  element.innerHTML = createAvater(params.get("User"));
+  if (element) {
+    element.innerHTML = createAvater(params.get("User"));
+  }
+  return;
 }
 
 function checkUrlParams() {
@@ -99,17 +102,17 @@ function checkUrlParams() {
   if (params.size == 0) {
     let url = window.location.href;
     window.location.href = `${url}?${newParams}`;
-  } else return
+  } else return;
 }
 
-function goTokPage(status, target) {
+function goToPage(status, target) {
   const urlParams = new URLSearchParams(window.location.search);
   const userName = urlParams.get("User");
   const params = new URLSearchParams({
     User: userName,
     Status: status,
   });
-  window.location.href = `../html-templates/${target}.html?${params}`; 
+  window.location.href = `../html-templates/${target}.html?${params}`;
 }
 
 function createAvater(name) {
@@ -132,7 +135,7 @@ function updateLinksWithUserKey(target) {
 
 function isPrivacyMessage() {
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("User") === "privacy") adjustLayoutForPrivacyView();
+  // if (urlParams.get("User") === "privacy" || urlParams.get("User") === "legal") adjustLayoutForPrivacyView();
 }
 
 function adjustLayoutForPrivacyView() {
@@ -140,7 +143,7 @@ function adjustLayoutForPrivacyView() {
   const navImg = document.querySelector(".nav-imgs");
   const pageATag = document.querySelector(".page-header");
   pageATag.children[1].remove();
-  
+
   navImg.innerHTML = "";
   ul.innerHTML = "";
   ul.innerHTML += navLink("login", "../index.html", "Log in");

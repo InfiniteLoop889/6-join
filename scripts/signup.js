@@ -74,12 +74,22 @@ function openLogin() {
   }, 250);
 }
 
+// Part of function isPrivacyMessage()
 function openPrivacy() {
   const params = new URLSearchParams({
     User: "privacy",
     Status: "to-do",
   });
-  window.location.href = `../html-templates/privacy-policy.html?${params}`;
+  window.location.href = `../html-templates/privacy-policy-logged-out.html?${params}`;
+}
+
+// Part of function isPrivacyMessage()
+function openLegal() {
+  const params = new URLSearchParams({
+    User: "legal",
+    Status: "to-do",
+  });
+  window.location.href = `../html-templates/legal-notice-logged-out.html?${params}`;
 }
 
 function checkName(userName) {

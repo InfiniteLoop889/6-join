@@ -42,7 +42,7 @@ function userIcon(color = "red", initials = "xx", name = "xx") {
 }
 
 function assignedUserIcon(color, initials) {
-    return `
+  return `
         <div class="user-icon" style="background-color: ${color}">${initials}</div>
     `;
 }

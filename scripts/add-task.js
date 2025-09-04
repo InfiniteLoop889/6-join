@@ -24,13 +24,13 @@ function createSubObj(id, value) {
     id: id,
     value: value,
     edit: false,
-    checked: false
+    checked: false,
   };
 }
 
 function loadUrlStatus() {
   const urlParams = new URLSearchParams(window.location.search);
-  urlParams.size == 0 ? taskStatus = "to-do" : taskStatus = urlParams.get("Status");
+  urlParams.size == 0 ? (taskStatus = "to-do") : (taskStatus = urlParams.get("Status"));
 }
 
 function preventFromSubmit(event) {
@@ -77,28 +77,22 @@ function toggleAssignedDropdown() {
   refs.dropdown.classList.toggle("d-none");
   refs.overlay.classList.toggle("d-none");
   refs.btn.classList.toggle("rotate-180deg");
-  refs.input.parentElement.classList.toggle("blue-border")
+  refs.input.parentElement.classList.toggle("blue-border");
   refs.btn.classList.contains("rotate-180deg") ? filterUsers() : resetAssigneeFilter();
 }
 
 function filterUsers(input) {
   if (!input) return;
-  const userContainers = document.querySelectorAll(
-    '[data-type="userContainer"]'
-  );
+  const userContainers = document.querySelectorAll('[data-type="userContainer"]');
   userContainers.forEach((container) => {
     let userName = container.children[1].innerHTML.toLowerCase();
-    !userName.includes(input.toLowerCase())
-      ? container.classList.add("d-none")
-      : container.classList.remove("d-none");
+    !userName.includes(input.toLowerCase()) ? container.classList.add("d-none") : container.classList.remove("d-none");
   });
 }
 
 function resetAssigneeFilter() {
   const refs = getAssigneeRefs();
-  const userContainers = document.querySelectorAll(
-    '[data-type="userContainer"]'
-  );
+  const userContainers = document.querySelectorAll('[data-type="userContainer"]');
   refs.input.value = "Select contacts to assign";
   userContainers.forEach((container) => {
     container.classList.remove("d-none");
@@ -134,9 +128,7 @@ function activePriority(prio) {
   priorities.forEach((priority) => {
     const btn = document.getElementById(priority);
     const icon = document.getElementById(`${priority}-btn-icon`);
-    priority == selectedPriority
-      ? prioBtnActive(btn, icon, priority)
-      : prioBtnOff(btn, icon, priority);
+    priority == selectedPriority ? prioBtnActive(btn, icon, priority) : prioBtnOff(btn, icon, priority);
   });
 }
 
@@ -156,8 +148,8 @@ function addSubtask() {
   const subList = document.getElementById("sub-list");
   if (inputElement.value.trim().length == 0) {
     inputElement.value = "";
-    return
-  };
+    return;
+  }
   let id = getNextFreeId();
   subtask.push(createSubObj(id, inputElement.value));
   subList.innerHTML += subListItem(inputElement.value, id);
@@ -217,19 +209,9 @@ function loadUsers() {
   users.forEach((user) => {
     let initials = initialsFromName(user.name);
     if (user.assigned) {
-      assignedDropdown.innerHTML += singleUserContainer(
-        "single-user-container_select",
-        initials,
-        user.name,
-        user.color
-      );
+      assignedDropdown.innerHTML += singleUserContainer("single-user-container_select", initials, user.name, user.color);
     } else {
-      assignedDropdown.innerHTML += singleUserContainer(
-        "single-user-container",
-        initials,
-        user.name,
-        user.color
-      );
+      assignedDropdown.innerHTML += singleUserContainer("single-user-container", initials, user.name, user.color);
     }
   });
 }
@@ -246,7 +228,7 @@ function initialsFromName(user) {
 function assignedUser(name) {
   let index = searchUserIndex(name);
   const refs = getAssigneeRefs();
-  if (!users[index]) return
+  if (!users[index]) return;
   if (users[index].assigned == false) {
     users[index].assigned = true;
     loadUsers();
@@ -275,7 +257,7 @@ function loadAssignedUserIcons() {
 
   const firstFour = assignedUserArr.slice(0, 4);
   const rest = Math.max(assignedUserArr.length - 4, 0);
-  let userTempArr = firstFour.map(u => userIcon(u.color, initialsFromName(u.name), u.name));
+  let userTempArr = firstFour.map((u) => userIcon(u.color, initialsFromName(u.name), u.name));
   let html = userTempArr.join("");
 
   if (rest > 0) {
@@ -297,12 +279,7 @@ function removeUserFromArray(name) {
 async function createTaskForm() {
   let validateTask = isTaskDataValid();
   if (!validateTask) return;
-  let task = taskObjTemplate(
-    selectedPriority,
-    assignedUserArr,
-    subtask,
-    taskStatus
-  );
+  let task = taskObjTemplate(selectedPriority, assignedUserArr, subtask, taskStatus);
   await postData("tasks", task);
   animationSuccess();
 }
@@ -361,12 +338,7 @@ function getFormElementsIds() {
   return formIds;
 }
 
-function taskObjTemplate(
-  priority = "medium",
-  users,
-  subtask,
-  status = "to-do"
-) {
+function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") {
   return {
     title: document.getElementById("titleInput").value,
     description: document.getElementById("description").value,
@@ -410,6 +382,6 @@ function animationSuccess() {
   const successMessage = document.querySelector(".success-message");
   successMessage.classList.add("is-open");
   setTimeout(() => {
-    goTokPage(taskStatus, "board");
+    goToPage(taskStatus, "board");
   }, 1600);
 }

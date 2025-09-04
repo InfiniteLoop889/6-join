@@ -9,7 +9,7 @@
 
 .success-message {
   inset: 0;
-  background: rgba(0,0,0,.7);
+  background: rgba(0, 0, 0, 0.7);
   position: fixed;
   z-index: 10;
   display: flex;
@@ -21,7 +21,7 @@
 
 .success-message.is-open {
   pointer-events: auto;
-  animation: fadeIn .25s ease forwards;
+  animation: fadeIn 0.25s ease forwards;
 }
 
 .message-task {
@@ -35,11 +35,13 @@
 }
 
 .success-message.is-open .message-task {
-  animation: slideIn .25s ease-out .15s forwards;
+  animation: slideIn 0.25s ease-out 0.15s forwards;
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
@@ -181,7 +183,7 @@ button div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .input-assaign {

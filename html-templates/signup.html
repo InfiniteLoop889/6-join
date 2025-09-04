@@ -62,8 +62,8 @@
                 <p class="error-signup" data-field="errorPassword"></p>
                 <div class="checkbox-container">
                     <input type="checkbox" id="privacyCheckbox" name="vehicle1">
-                    <label for="vehicle1"> I accept the <btn class="privacy-text" onclick="openPrivacy()">Privacy policy
-                        </btn>
+                    <label for="vehicle1">
+                        I accept the <btn class="privacy-text" onclick="openPrivacy()">Privacy policy</btn>
                     </label>
                 </div>
                 <div class="button-group">
@@ -75,14 +75,14 @@
 
     <div id="overlay" class="overlay hidden">
         <div class="overlay-wrapper signup-success transit">
-            <h2>Login war erfolgreich!</h2>
+            <h2>Signup war erfolgreich!</h2>
         </div>
     </div>
 
     <footer>
         <div class="Legal-texts">
-            <span class="Privacy-text">Privacy Policy</span>
-            <span class="Privacy-text">Legal notice</span>
+            <btn class="Privacy-text" onclick="openPrivacy()">Privacy policy</btn>
+            <btn class="Privacy-text" onclick="openLegal()">Legal notice</btn>
         </div>
     </footer>
 </body>
