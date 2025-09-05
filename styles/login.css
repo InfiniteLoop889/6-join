@@ -91,6 +91,7 @@
   align-items: center;
   background: white;
   z-index: 10;
+  /* abbreviated form */
   /* animation: overlay-fade 1.2s ease-in-out forwards; */
   animation-name: overlay-fade;
   animation-duration: 1.2s;
@@ -106,6 +107,7 @@
   width: 120px;
   height: auto;
   z-index: 11;
+  /* abbreviated form */
   /* animation: logo-animation 1.2s ease-in-out forwards; */
   animation-name: logo-animation;
   animation-duration: 1.2s;

@@ -78,21 +78,21 @@ function openLogin() {
 }
 
 // Part of function isPrivacyMessage()
-function openPrivacy() {
+function openPrivacy(path = "") {
   const params = new URLSearchParams({
     User: "privacy",
     Status: "to-do",
   });
-  window.location.href = `../html-templates/privacy-policy-logged-out.html?${params}`;
+  window.location.href = `${path}./html-templates/privacy-policy-logged-out.html?${params}`;
 }
 
 // Part of function isPrivacyMessage()
-function openLegal() {
+function openLegal(path = "") {
   const params = new URLSearchParams({
     User: "legal",
     Status: "to-do",
   });
-  window.location.href = `../html-templates/legal-notice-logged-out.html?${params}`;
+  window.location.href = `${path}./html-templates/legal-notice-logged-out.html?${params}`;
 }
 
 function checkName(userName) {
@@ -100,7 +100,7 @@ function checkName(userName) {
   let errorElements = errorFields();
   let validate = userName.trim() <= 0 || !userName.trim() ? false : true;
   if (!validate) {
-    errorElements.name.innerHTML = "Please enter your name";
+    errorElements.name.innerHTML = "Please enter your name.";
     addRedOutline(inputContainer[0]);
   }
   return validate;
@@ -117,7 +117,7 @@ function validateEmail(email) {
 function errorEmail() {
   const inputContainer = document.querySelectorAll(".input-container");
   let errorElements = errorFields();
-  errorElements.email.innerHTML = "Please enter a valid email address";
+  errorElements.email.innerHTML = "Please enter a valid email address.";
   addRedOutline(inputContainer[1]);
 }
 

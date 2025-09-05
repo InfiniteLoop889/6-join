@@ -26,7 +26,7 @@
 
 .message-task {
   opacity: 0;
-  transform: translateX(100vw);
+  transform: translateY(100vw);
   background-color: #2a3647;
   padding: 24px;
   border-radius: 16px;
@@ -756,19 +756,12 @@ button div {
 
   .tasks-form-container {
     padding: 0 16px !important;
+    margin-bottom: 12px;
   }
 
   .addTask-Container {
     gap: 16px;
   }
-
-  /* .task-name {
-    font-size: 14px;
-  } */
-
-  /* .priority-btn-container button {
-    font-size: 14px;
-  } */
 
   .btn-priority {
     height: 40px;
@@ -797,33 +790,11 @@ button div {
     padding: 0px;
   }
 
-  /* .input-container {
-    font-size: 14px;
-  } */
-
-  /* .single-user-container {
-    font-size: 14px;
-  } */
-
-  /* input::placeholder {
-    font-size: 14px;
-  } */
-
-  /* .sub-item input {
-    font-size: 14px;
-  } */
-
   .error-message {
-    /* font-size: 14px; */
     height: 14px;
   }
 
-  /* .input-task {
-    font-size: 14px;
-  } */
-
   .task-controls {
-    /* font-size: 14px; */
     flex-direction: column;
     align-items: flex-start;
   }
@@ -838,5 +809,9 @@ button div {
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  .sub-container {
+    height: 48px;
   }
 }
