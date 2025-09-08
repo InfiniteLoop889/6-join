@@ -560,11 +560,20 @@ h3 {
 
 .user-email {
   color: #007bff;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-name {
   display: flex;
   flex-direction: column;
+}
+
+.user-name h3 {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .edit-delete-buttons {
