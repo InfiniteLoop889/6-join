@@ -64,6 +64,10 @@ a {
     min-width: none !important;
     height: auto;
     z-index: 2;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .join-logo {

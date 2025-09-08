@@ -216,6 +216,12 @@
   }
 }
 
+@media (max-width: 992px) {
+  #content-wrapper {
+    margin: 96px 0 108px 0;
+  }
+}
+
 @media (max-width: 850px) {
   #content-wrapper {
     padding: 0 64px;
@@ -314,7 +320,8 @@
   }
 
   #content-wrapper {
-    padding: 0 16px;
+    padding: 0 16px;    
+    margin: 60px 0 80px 0;
   }
 
   .metric-icon {

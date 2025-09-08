@@ -695,7 +695,8 @@ button div {
 
   .create-task-container {
     width: 100%;
-    margin: 64px 0 0 0;
+    margin: 128px 0 108px 0 !important;
+    margin-top: 96px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -722,7 +723,7 @@ button div {
   .create-task-container {
     flex-grow: 1;
     justify-content: start;
-    margin-bottom: 64px;
+    margin: 120px 0 108px 0;
   }
 
   .tasks-form-container {
@@ -758,6 +759,12 @@ button div {
 @media (max-width: 480px) {
   .header-task {
     font-size: 2.5rem;
+  }
+
+  .create-task-container {
+    flex-grow: 1;
+    justify-content: start;
+    margin: 124px 0 108px 0;
   }
 
   .tasks-form-container {
