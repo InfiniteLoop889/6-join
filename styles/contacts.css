@@ -97,13 +97,22 @@ body {
   justify-content: center;
 }
 
+.info {
+   flex: 1;
+   min-width: 0;
+}
+
 .info .name {
   font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .info .email {
   color: #007bff;
   font-size: 0.9em;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* Contacts field */

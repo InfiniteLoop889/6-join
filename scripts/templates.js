@@ -442,12 +442,12 @@ function editContactOverlay(user) {
                     </div>
                     <div class="contact-form">
                         <div class="input-container" onclick="checkForError(event)">
-                            <input type="text" class="signup-input" id="contact-name" value="${user.name}" placeholder="Name" name="name" data-field="name" maxlength="30">
+                            <input type="text" class="signup-input" id="contact-name" value="${user.name}" placeholder="Name" name="name" data-field="name">
                             <img src="../assets/icons/person.svg" alt="person-icon" class="signup-icon">
                         </div>
                         <p class="error-signup" data-field="errorName"></p>
                         <div class="input-container" onclick="checkForError(event)">
-                            <input type="email" class="signup-input" id="contact-email" value="${user.email}" placeholder="Email" name="email" data-field="email" maxlength="30">
+                            <input type="email" class="signup-input" id="contact-email" value="${user.email}" placeholder="Email" name="email" data-field="email">
                             <img src="../assets/icons/mail.svg" alt="envelope-icon" class="signup-icon">
                         </div>
                         <p class="error-signup" data-field="errorEmail"></p>                        
@@ -490,12 +490,12 @@ function getContactOverlayTemplate() {
                     </div>
                     <div class="contact-form">
                         <div class="input-container" onclick="checkForError(event)">
-                            <input type="text" class="signup-input" id="contact-name" placeholder="Name" name="name" data-field="name" maxlength="30">
+                            <input type="text" class="signup-input" id="contact-name" placeholder="Name" name="name" data-field="name">
                             <img src="../assets/icons/person.svg" alt="person-icon" class="signup-icon">
                         </div>
                         <p class="error-signup" data-field="errorName"></p>
                         <div class="input-container" onclick="checkForError(event)">
-                            <input type="email" class="signup-input" id="contact-email" placeholder="Email" name="email" data-field="email" maxlength="30">
+                            <input type="email" class="signup-input" id="contact-email" placeholder="Email" name="email" data-field="email">
                             <img src="../assets/icons/mail.svg" alt="envelope-icon" class="signup-icon">
                         </div>
                         <p class="error-signup" data-field="errorEmail"></p>
