@@ -339,13 +339,16 @@ function getFormElementsIds() {
 }
 
 function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") {
+  let categoryText = document.getElementById("select-category").innerText;
+  console.log(categoryText);
+
   return {
     title: document.getElementById("titleInput").value,
     description: document.getElementById("description").value,
     date: document.getElementById("date").value,
     priority: priority,
     assigned: users,
-    category: document.getElementById("select-category").innerHTML,
+    category: document.getElementById("select-category").innerText,
     subtask: subtask,
     status: status,
     order: order,
@@ -384,4 +387,10 @@ function animationSuccess() {
   setTimeout(() => {
     goToPage(taskStatus, "board");
   }, 1600);
+}
+
+
+function setMinDateToToday() {
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("date").setAttribute("min", today);
 }

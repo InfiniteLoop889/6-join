@@ -128,7 +128,7 @@ body {
 .btn-hide-contact {
   display: none;
   position: absolute;
-  top: 32px;
+  top: 128px;
   right: 32px;
   height: 32px;
   width: 32px;
@@ -163,9 +163,8 @@ body {
 }
 
 .contact-text-filed {
-  margin: 0;
+  padding-top: 6px;
   font-weight: 300;
-  /* font-size: 24px; */
   line-height: 1.2;
 }
 
@@ -435,14 +434,13 @@ body {
   flex-grow: 1;
   flex-direction: column;
   overflow-x: hidden;
-  /* font-size: 20px; */
   padding: 64px 64px 32px 64px;
 }
 
 .edit-delete-container {
   position: absolute;
-  bottom: 32px;
   left: 0;
+  bottom: 128px;
   padding: 32px;
   width: 100%;
   display: flex;
@@ -643,11 +641,12 @@ h3 {
   }
 
   .contact-title {
-    padding: 40px 0 0 24px;
+    padding: 128px 0 0 24px;
   }
 
   .info-container {
     padding: 40px 0 0 24px;
+    flex-grow: 1;
   }
 }
 
@@ -728,9 +727,9 @@ h3 {
   }
 
   .contact-field {
-    margin-bottom: 80px;
+    /* margin-bottom: 80px; */
     display: none;
-    margin-top: 96px;
+    /* margin-top: 96px; */
     position: absolute;
     z-index: 1;
     width: 100vw;
@@ -817,7 +816,7 @@ h3 {
   }
 
   .contact-title {
-    padding: 16px 16px;
+    padding: 116px 0 0 24px;
   }
 
   .info-container {
@@ -833,6 +832,6 @@ h3 {
   }
 
   .edit-delete-container {
-    bottom: 0;
+    bottom: 80px;
   }
 }

@@ -420,11 +420,16 @@ Overlay
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  min-width: 0;
 }
 
 .subtask-item label {
   margin-left: 8px;
   cursor: pointer;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .overlay-footer {
@@ -461,6 +466,13 @@ Overlay
   display: none;
 }
 
+.user-name-board {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* -------------------------------------------
 Overlay - Detailed Task view 
 ---------------------------------------------- */
@@ -468,10 +480,11 @@ Overlay - Detailed Task view
 .btn-subtask {
   background-image: url(../assets/icons/check_icon_empty.svg);
   height: 16px;
-  width: 16px;
+  min-width: 16px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+
 }
 
 .btn-subtask.checked {
@@ -733,21 +746,6 @@ Media queries Board
     padding: 24px;
   }
 
-  .sub-item-editing {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .sub-item-editing input {
-    flex-grow: 0;
-  }
-
-  .sub-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
   .sub-item span {
     display: none;
   }
@@ -770,10 +768,6 @@ Media queries Board
     width: 100% !important;
     padding: 0 !important;
   }
-
-  /* .board {
-    height: auto;
-  } */
 
   .column:last-child {
     padding-bottom: 32px;

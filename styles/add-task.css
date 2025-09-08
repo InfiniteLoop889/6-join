@@ -183,7 +183,7 @@ button div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .input-assaign {
@@ -505,6 +505,9 @@ button div {
 
 .user-name {
   flex-grow: 1;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn-check {
@@ -563,6 +566,9 @@ button div {
   min-width: 0;
   width: 100%;
   cursor: pointer;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sub-item input:disabled {

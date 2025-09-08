@@ -70,7 +70,7 @@ function descriptionTaskTpl(description = "") {
 
 function dateTaskTpl(date = "") {
   return `
-        <div class="task-container">
+        <div class="task-container" onclick="setMinDateToToday()">
             <label for="date" class="task-name">
                 Due date<span class="red-font">*</span>
             </label>
@@ -129,9 +129,9 @@ function categoryTaskTpl() {
             <span class="task-name">
                 Category<span class="red-font">*</span>
             </span>
-            <div class="input-container" id="open-category-dropdown">
+            <div class="input-container" id="open-category-dropdown" onclick="toggleCategoryDropdown()">
                 <span id="select-category">Select Task category</span>
-                <button type="button" class="btn-dropdown" id="category-btn" onclick="toggleCategoryDropdown()">
+                <button type="button" class="btn-dropdown" id="category-btn">
                     <img src="../assets/icons/arrow_drop_down.svg" alt="">
                 </button>
             </div>
@@ -305,7 +305,7 @@ function createPersonListItem(userObj, username) {
   return `
     <li class="assigned-person mb-14">
         <span class="avatar" style="background: ${userObj.color};">${username}</span>
-        <span>${userObj.name}</span>
+        <span class="user-name-board">${userObj.name}</span>
     </li>
   `;
 }
@@ -324,8 +324,8 @@ function createSubtaskTemplate(taskId, subtaskArr) {
 function createSubtaskListItem(taskId, subtaskObj) {
   const checkedClass = subtaskObj.checked ? " checked" : "";
   return `
-    <li class="subtask-item mb-14" data-id="${subtaskObj.id}">
-      <button class="btn-subtask btn-transparent ${checkedClass}" data-id="${subtaskObj.id}" onclick="checkInOutSubtask('${taskId}', '${subtaskObj.id}')"></button>
+    <li class="subtask-item mb-14" data-id="${subtaskObj.id}" onclick="checkInOutSubtask('${taskId}', '${subtaskObj.id}')">
+      <button class="btn-subtask btn-transparent ${checkedClass}" data-id="${subtaskObj.id}"></button>
       <label>${subtaskObj.value}</label>
     </li>
   `;
