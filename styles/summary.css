@@ -336,10 +336,6 @@
     height: 20px;
   }
 
-  /* .metric-label {
-    font-size: 0.7rem;
-  } */
-
   .parent {
     grid-template-rows: repeat(3, 116px);
   }

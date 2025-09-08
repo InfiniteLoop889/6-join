@@ -1,5 +1,5 @@
 function subListItem(task, id) {
-    return `
+  return `
         <li class="sub-item">
             <span>•</span>
             <input type="text" value="${task}" id="sub-input-${id}" disabled>
@@ -13,7 +13,7 @@ function subListItem(task, id) {
 }
 
 function subListItemEdit(task, id) {
-    return `
+  return `
         <li class="sub-item-editing">
             <input type="text" id="sub-input-${id}" value="${task}">
             <div class="sub-btn-container">
@@ -26,7 +26,7 @@ function subListItemEdit(task, id) {
 }
 
 function singleUserContainer(style, initials, name = "XX", color = "red") {
-    return `
+  return `
         <div class="${style}" data-type="userContainer" onclick="assignedUser('${name}')">
             <div class="user-icon" style="background-color: ${color};">${initials}</div>
             <span class="user-name">${name}</span>
@@ -36,7 +36,7 @@ function singleUserContainer(style, initials, name = "XX", color = "red") {
 }
 
 function userIcon(color = "red", initials = "xx", name = "xx") {
-    return `
+  return `
         <div class="user-icon" onclick="assignedUser('${name}')" style="background-color: ${color}">${initials}</div>
     `;
 }
@@ -48,7 +48,7 @@ function assignedUserIcon(color, initials) {
 }
 
 function titleTaskTpl(title = "") {
-    return `
+  return `
         <div class="task-container">
             <label for="titleInput" class="task-name">
                 Title<span class="red-font">*</span>
@@ -60,7 +60,7 @@ function titleTaskTpl(title = "") {
 }
 
 function descriptionTaskTpl(description = "") {
-    return `
+  return `
         <div class="task-container">
             <label for="description-input" class="task-name">Description</label>
             <textarea id="description" class="textarea-description" maxlength="148">${description}</textarea>
@@ -69,7 +69,7 @@ function descriptionTaskTpl(description = "") {
 }
 
 function dateTaskTpl(date = "") {
-    return `
+  return `
         <div class="task-container">
             <label for="date" class="task-name">
                 Due date<span class="red-font">*</span>
@@ -81,7 +81,7 @@ function dateTaskTpl(date = "") {
 }
 
 function prioTaskTpl() {
-    return `
+  return `
         <div class="task-container">
             <span class="task-name">Priority</span>
             <div class="priority-btn-container">
@@ -103,7 +103,7 @@ function prioTaskTpl() {
 }
 
 function assignedTaskTpl() {
-    return `
+  return `
         <div class="task-container" id="task-container">
             <span class="task-name">Assigned to:</span>
             <div class="input-container" onclick="toggleAssignedDropdown()">
@@ -124,7 +124,7 @@ function assignedTaskTpl() {
 }
 
 function categoryTaskTpl() {
-    return `
+  return `
         <div class="task-container" id="category-container">
             <span class="task-name">
                 Category<span class="red-font">*</span>
@@ -152,7 +152,7 @@ function categoryTaskTpl() {
 }
 
 function subtaskTpl() {
-    return `
+  return `
         <div class="task-container">
             <span class="task-name">Subtask</span>
             <div class="input-container">
@@ -171,7 +171,7 @@ function subtaskTpl() {
 }
 
 function editTaskTpl() {
-    return `
+  return `
         <div class="close-edit-conatiner">
             <button class="close-task" onclick="closeOverlay(); resetTaskData()"></button>
         </div>
@@ -180,7 +180,7 @@ function editTaskTpl() {
 }
 
 function okBtn(taskId) {
-    return `
+  return `
         <div class="saveBtn-Container">
             <button class="btn-create" onclick="saveEditedTask('${taskId}'); resetTaskData()">
                 Ok
@@ -191,7 +191,7 @@ function okBtn(taskId) {
 }
 
 function createTaskTemplate(id, task) {
-    return `
+  return `
       <div class="dragging-task task draggable" data-id="${id}" id="${id}" draggable="true" onclick="renderSelectedTask('${id}')">
           <span class="tag ${createCategoryClass(task.category)}">${task.category}</span>
           <h4>${task.title}</h4>
@@ -208,7 +208,7 @@ function createTaskTemplate(id, task) {
 }
 
 function createProgressWrapper(subtasks, numerus, subtaskDone) {
-    return `
+  return `
     <div class="progress-wrapper">
       ${progessTemplate(subtasks, numerus, subtaskDone)}
     </div>
@@ -216,7 +216,7 @@ function createProgressWrapper(subtasks, numerus, subtaskDone) {
 }
 
 function progessTemplate(subtasks, numerus, subtaskDone) {
-    return `
+  return `
     <div class="progress-bar">
         <div class="progress" style="width: ${Math.round((subtaskDone.length / subtasks.length) * 100)}%;"></div>
     </div>
@@ -225,7 +225,7 @@ function progessTemplate(subtasks, numerus, subtaskDone) {
 }
 
 function createPersonTemplate(userObj, username) {
-    return `<span class="avatar" style="background: ${userObj.color};" > ${username}</span>`;
+  return `<span class="avatar" style="background: ${userObj.color};" > ${username}</span>`;
 }
 
 function createMorePersonsTemplate(remainingCount) {
@@ -233,17 +233,17 @@ function createMorePersonsTemplate(remainingCount) {
 }
 
 function createTaskPlaceholder() {
-    return `<div class="empty">No tasks To do</div>`;
+  return `<div class="empty">No tasks To do</div>`;
 }
 
 function createTaskPlaceholderDone() {
-    return `<div class="empty">No tasks done</div>`;
+  return `<div class="empty">No tasks done</div>`;
 }
 
 // --------------------- Task-Overlay ---------------------------------------
 
 function createDetailedTaskTemplate(taskId, task) {
-    return `
+  return `
     <div class="overlay-outer overlay-wrapper transit">
         <div class="overlay-content" onclick="onclickProtection(event)">
             <div class="overlay-header mb-20">
@@ -291,7 +291,7 @@ function createDetailedTaskTemplate(taskId, task) {
 }
 
 function createPersonTemplateDetailView(userObj) {
-    return `
+  return `
     <div>
         <div class="section-title mb-14">Assigned to:</div>
         <ul class="assigned-list mb-20">
@@ -302,7 +302,7 @@ function createPersonTemplateDetailView(userObj) {
 }
 
 function createPersonListItem(userObj, username) {
-    return `
+  return `
     <li class="assigned-person mb-14">
         <span class="avatar" style="background: ${userObj.color};">${username}</span>
         <span>${userObj.name}</span>
@@ -311,7 +311,7 @@ function createPersonListItem(userObj, username) {
 }
 
 function createSubtaskTemplate(taskId, subtaskArr) {
-    return `
+  return `
     <div>
         <div class="section-title mb-14">Subtasks</div>
         <ul class="subtasks mb-20">
@@ -322,8 +322,8 @@ function createSubtaskTemplate(taskId, subtaskArr) {
 }
 
 function createSubtaskListItem(taskId, subtaskObj) {
-    const checkedClass = subtaskObj.checked ? " checked" : "";
-    return `
+  const checkedClass = subtaskObj.checked ? " checked" : "";
+  return `
     <li class="subtask-item mb-14" data-id="${subtaskObj.id}">
       <button class="btn-subtask btn-transparent ${checkedClass}" data-id="${subtaskObj.id}" onclick="checkInOutSubtask('${taskId}', '${subtaskObj.id}')"></button>
       <label>${subtaskObj.value}</label>
@@ -334,9 +334,9 @@ function createSubtaskListItem(taskId, subtaskObj) {
 // --------------------- Contact-Overlay ---------------------------------------
 
 function renderUserInfo(id, user) {
-    const editContainer = document.querySelector(".edit-delete-container");
-    editContainer.innerHTML = responsiveEditMenu(id);
-    return `
+  const editContainer = document.querySelector(".edit-delete-container");
+  editContainer.innerHTML = responsiveEditMenu(id);
+  return `
         <div class="user-details" onclick="event.stopPropagation()">
             <div class="user-name-container">
                 <div class="avatar-circle" style="background-color: ${user.color};">${user.avatar}
@@ -366,7 +366,7 @@ function renderUserInfo(id, user) {
 }
 
 function responsiveEditMenu(id) {
-    return `
+  return `
         <button class="open-edit-delete" onclick="opencEditMenu()"></button>
         <div class="mobile-edit-delete" hidden onclick="closeEditMenu()">
             <div class="user-edit-container">
@@ -383,24 +383,24 @@ function responsiveEditMenu(id) {
 }
 
 function createContactElement(user, id) {
-    const div = document.createElement("div");
-    div.classList.add("contact");
-    div.addEventListener("click", (event) => {
-        openUserInfos(id);
-        toggleContactBg(event);
-    });
-    div.innerHTML = `
+  const div = document.createElement("div");
+  div.classList.add("contact");
+  div.addEventListener("click", (event) => {
+    openUserInfos(id);
+    toggleContactBg(event);
+  });
+  div.innerHTML = `
         <div class="avatar" style="background-color: ${user.color};">${user.avatar || user.Avatar}</div>
         <div class="info">
             <div class="name">${user.name}</div>
             <div class="email">${user.email}</div>
         </div>
     `;
-    return div;
+  return div;
 }
 
 function navLink(icon, link, section) {
-    return `
+  return `
         <li class="nav-link">
             <a href="${link}">
                 <img src="../assets/icons/${icon}.svg" alt="">
@@ -411,7 +411,7 @@ function navLink(icon, link, section) {
 }
 
 function sidebarLinkTemplate() {
-    return `
+  return `
         <li class="nav-link">
             <a href="../index.html">
                 <img src="../assets/icons/summary.svg" alt="summary">
@@ -421,9 +421,10 @@ function sidebarLinkTemplate() {
     `;
 }
 
-function editContactOverlay(user) {
-    const overlay = document.getElementById("overlay");
-    overlay.innerHTML = `
+function editContactOverlay(id, user) {
+  console.log(id);
+  const overlay = document.getElementById("overlay");
+  overlay.innerHTML = `
     <div class="overlay-outer overlay-wrapper transit">
         <div class="modal overlay-content-contact" onclick="onclickProtection(event)"> 
             <div class="modal-left">
@@ -457,7 +458,7 @@ function editContactOverlay(user) {
                         </div>
                         <p class="error-signup" data-field="errorPhone"></p>
                         <div class="buttons">
-                            <button type="button" class="cancel" onclick="closeOverlay()">Cancel</button>
+                            <button type="button" class="cancel" onclick="deleteUser('users/${id}'); closeEditMenu(); hideContacts()">Delete</button>
                             <button type="submit" class="create">Save
                                 <img src="../assets/icons/check.svg" alt="check-icon" class="check-icon" />
                             </button>
@@ -471,7 +472,7 @@ function editContactOverlay(user) {
 }
 
 function getContactOverlayTemplate() {
-    return `
+  return `
     <div class="overlay-outer overlay-wrapper transit">
         <div class="modal overlay-content-contact" onclick="onclickProtection(event)"> 
             <div class="modal-left">

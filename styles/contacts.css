@@ -165,7 +165,7 @@ body {
 .contact-text-filed {
   margin: 0;
   font-weight: 300;
-  font-size: 24px;
+  /* font-size: 24px; */
   line-height: 1.2;
 }
 
@@ -185,7 +185,7 @@ body {
   border-radius: 50%;
   color: white;
   font-weight: bold;
-  font-size: 24px;
+  /* font-size: 24px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -432,13 +432,17 @@ body {
 
 .info-container {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   overflow-x: hidden;
-  font-size: 20px;
+  /* font-size: 20px; */
   padding: 64px 64px 32px 64px;
 }
 
 .edit-delete-container {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
   padding: 32px;
   width: 100%;
   display: flex;
@@ -625,6 +629,10 @@ h3 {
   flex-direction: row-reverse;
 }
 
+.info-container {
+  flex-grow: 1;
+}
+
 @media (max-width: 1200px) {
   .modal {
     width: 960px;
@@ -779,6 +787,15 @@ h3 {
 }
 
 @media (max-width: 480px) {
+  .information-field {
+    font-size: 20px;
+    margin: 22px 0px 22px;
+  }
+
+  .user-name-container {
+    margin-bottom: 0;
+  }
+
   .modal-left h2 {
     font-size: 2.5rem;
   }
@@ -789,14 +806,10 @@ h3 {
     width: 115px;
   }
 
-  /* .input-group-contact input::placeholder {
-    font-size: 14px;
-  } */
-
   .avatar-circle {
-    height: 108px;
-    width: 108px;
-    font-size: 40px;
+    height: 90px;
+    width: 90px;
+    font-size: 30px;
   }
 
   .user-name-container {
@@ -817,5 +830,9 @@ h3 {
 
   .buttons button {
     font-size: 14px;
+  }
+
+  .edit-delete-container {
+    bottom: 0;
   }
 }
