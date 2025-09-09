@@ -2,8 +2,6 @@
   margin: 64px 0 32px 64px;
 }
 
-/* ------------------------------ header title ------------------------------ */
-
 .header-title {
   display: flex;
   align-items: center;
@@ -36,8 +34,6 @@
   background-color: #29abe2;
   border-radius: 10px;
 }
-
-/* ------------------------------ dashboard ------------------------------ */
 
 .dashboard-summary {
   display: flex;
@@ -143,8 +139,6 @@
   font-weight: 600;
   font-size: 3rem;
 }
-
-/* ------------------------------ grid strucutre ------------------------------ */
 
 .parent {
   display: grid;
@@ -320,7 +314,7 @@
   }
 
   #content-wrapper {
-    padding: 0 16px;    
+    padding: 0 16px;
     margin: 60px 0 80px 0;
   }
 

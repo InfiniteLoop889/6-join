@@ -240,8 +240,6 @@ function createTaskPlaceholderDone() {
   return `<div class="empty">No tasks done</div>`;
 }
 
-// --------------------- Task-Overlay ---------------------------------------
-
 function createDetailedTaskTemplate(taskId, task) {
   return `
     <div class="overlay-outer overlay-wrapper transit">
@@ -330,8 +328,6 @@ function createSubtaskListItem(taskId, subtaskObj) {
     </li>
   `;
 }
-
-// --------------------- Contact-Overlay ---------------------------------------
 
 function renderUserInfo(id, user) {
   const editContainer = document.querySelector(".edit-delete-container");

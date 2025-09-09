@@ -4,7 +4,6 @@ function renderBoard(tasks) {
 
   if (tasks) {
     let categories = {};
-    // Group tasks in categories to use forEach loop
     let entries = Object.entries(tasks);
 
     entries.forEach((task) => {
@@ -22,7 +21,6 @@ function loopThroughCategories(categories) {
     let taskWrapper = column.querySelector(".task-wrapper");
 
     if (taskWrapper) {
-      // "a[1].order ?? 0" means: If a[1].order is not defined or null, use 0
       let sortedTasks = categories[status].sort((a, b) => (a[1].order ?? 0) - (b[1].order ?? 0));
 
       sortedTasks.forEach((task) => {
@@ -48,7 +46,6 @@ function removePlaceholder() {
 }
 
 function createCategoryClass(category) {
-  // from e.g. "Technical Task" to "technical-task" for correct CSS class
   return category.toLowerCase().split(" ").join("-");
 }
 
@@ -157,6 +154,10 @@ async function checkInOutSubtask(taskId, subtaskId) {
   let subtaskProgress = selectedTask.querySelector(".progress-wrapper");
   subtaskRef.classList.toggle("checked");
 
+  await createSubtaskTemplates(taskId, taskObj, subtask, subtaskProgress);
+}
+
+async function createSubtaskTemplates(taskId, taskObj, subtask, subtaskProgress) {
   if (subtask) {
     subtask.checked = !subtask.checked;
     await putData("tasks/" + taskId, taskObj);
@@ -185,6 +186,11 @@ async function searchTasks() {
   const searchInput = desktopInput || mobileInput;
   const tasksObjLength = Object.keys(tasks).length;
 
+  toggleResults(tasks, searchInput);
+  managePlaceholders(tasksObjLength, searchInput);
+}
+
+function toggleResults(tasks, searchInput) {
   for (let task in tasks) {
     const taskElement = document.querySelector(`.task[data-id="${task}"]`);
     if (taskElement) {
@@ -192,6 +198,9 @@ async function searchTasks() {
       taskElement.classList.toggle("hidden", !isVisible);
     }
   }
+}
+
+function managePlaceholders(tasksObjLength, searchInput) {
   document.querySelectorAll(".empty").forEach((element) => element.classList.add("hidden"));
   const taskElements = document.querySelectorAll(".task.hidden");
   checkIfNoResults(tasksObjLength, taskElements);
@@ -310,8 +319,6 @@ function clearTaskFormContainers() {
   secondBoardAddTask.innerHTML = "";
 }
 
-// Drag and drop
-
 function placeholderHover(event) {
   event.preventDefault();
   adjustPlaceholders();
@@ -409,8 +416,6 @@ function adjustPlaceholders() {
 window.addEventListener("resize", () => {
   initDragAndDrop();
 });
-
-/*  Initializing  */
 
 async function initBoard() {
   let taskObj = await loadData("tasks/");

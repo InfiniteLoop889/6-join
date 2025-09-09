@@ -82,8 +82,6 @@ function closeAddTask() {
   }, 250);
 }
 
-//---------Call up user information------------------------
-
 async function renderUserIcon() {
   const element = document.querySelector(".profile-picture");
   let params = new URLSearchParams(window.location.search);

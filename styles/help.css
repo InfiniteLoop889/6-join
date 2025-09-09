@@ -1,108 +1,106 @@
 .container {
-    position: sticky;
-    max-width: 1400px;
-    margin: 15px;
-    padding: 40px 35px;
+  position: sticky;
+  max-width: 1400px;
+  margin: 15px;
+  padding: 40px 35px;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .back-button {
-    background: none;
-    border: none;
-    color: #4A90E2;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .back-button:hover {
-    background-color: #e3f2fd;
-    border-radius: 50%;
+  background-color: #e3f2fd;
+  border-radius: 50%;
 }
 
 h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 30px;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 30px;
 }
 
 h2 {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #2c3e50;
-    margin: 10px 0 10px 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 10px 0 10px 0;
 }
 
 p {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #555;
 }
 
 .join-link {
-    color: #4A90E2;
-    text-decoration: none;
-    font-weight: 500;
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .step {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 .step-number {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-right: 20px;
-    display: inline-block;
-    min-width: 40px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-right: 20px;
+  display: inline-block;
+  min-width: 40px;
 }
 
 .step-number {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-right: 20px;
-    display: inline-block;
-    min-width: 40px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-right: 20px;
+  display: inline-block;
+  min-width: 40px;
 }
 
 .step-title {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  display: inline-block;
 }
 
 .step-content {
-    margin-left: 60px;
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.7;
+  margin-left: 60px;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
 }
 
 .warning {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
 .contact-info {
-  
-    border-left: 4px solid #28a745;
-    padding: 15px 20px;
-    margin: 30px 0;
-    border-radius: 4px;
+  border-left: 4px solid #28a745;
+  padding: 15px 20px;
+  margin: 30px 0;
+  border-radius: 4px;
 }
 
 .final-message {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
 }
-

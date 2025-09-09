@@ -1,7 +1,3 @@
-/* -------------------------------------------
-Board header
----------------------------------------------- */
-
 .board-wrapper {
   max-width: 1440px;
   /* height: 100%; */
@@ -94,14 +90,9 @@ Board header
   vertical-align: middle;
 }
 
-/* -------------------------------------------
-Board
----------------------------------------------- */
-
 .board {
   display: flex;
   gap: 16px;
-  /* height: 100%; */
 }
 
 .no-select {
@@ -278,10 +269,6 @@ Board
   font-weight: 700;
 }
 
-/* -------------------------------------------
-Overlay
----------------------------------------------- */
-
 .overlay {
   position: fixed;
   top: 0;
@@ -295,8 +282,6 @@ Overlay
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* fade-in / fade-out effect  */
   opacity: 0;
   transition: opacity 250ms ease;
 }
@@ -314,8 +299,6 @@ Overlay
   top: 50%;
   left: 50%;
   border-radius: 30px;
-
-  /* translate(-50%, -50%) is for centering the overlay-wrapper in the correct position */
   transform: translate(-50%, -50%);
   transition: all 250ms ease-in-out;
 }
@@ -473,10 +456,6 @@ Overlay
   white-space: nowrap;
 }
 
-/* -------------------------------------------
-Overlay - Detailed Task view 
----------------------------------------------- */
-
 .btn-subtask {
   background-image: url(../assets/icons/check_icon_empty.svg);
   height: 16px;
@@ -484,16 +463,11 @@ Overlay - Detailed Task view
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-
 }
 
 .btn-subtask.checked {
   background-image: url(../assets/icons/check_icon.svg);
 }
-
-/* -------------------------------------------
-Add-Task
----------------------------------------------- */
 
 .board-tasks-container {
   display: flex;
@@ -564,10 +538,6 @@ Add-Task
   transform: translate(calc(-50% + 100vw), -50%);
 }
 
-/* -------------------------------------------
-Edit-Task
----------------------------------------------- */
-
 .editTask-container {
   width: 100%;
   max-height: 496px;
@@ -586,10 +556,6 @@ Edit-Task
 .saveBtn-Container {
   margin-top: 16px;
 }
-
-/* -------------------------------------------
-Media queries Board
----------------------------------------------- */
 
 @media (max-width: 1200px) {
   .board-wrapper {
@@ -777,9 +743,9 @@ Media queries Board
 }
 
 @media (max-width: 400px) {
- .board-wrapper {
-  margin: 64px 0 32px 0;
- }
+  .board-wrapper {
+    margin: 64px 0 32px 0;
+  }
 }
 
 @media (320px <=width <=800px) {
