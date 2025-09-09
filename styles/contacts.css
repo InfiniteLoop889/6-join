@@ -845,8 +845,16 @@ h3 {
     padding: 16px;
   }
 
+  .modal {
+    height: 600px;
+  }
+
   .modal-right {
     height: 58%;
+  }
+
+  .buttons {
+    margin: 24px 0 0 0;
   }
 
   .buttons button {

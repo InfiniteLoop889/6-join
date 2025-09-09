@@ -776,6 +776,12 @@ Media queries Board
   }
 }
 
+@media (max-width: 400px) {
+ .board-wrapper {
+  margin: 64px 0 32px 0;
+ }
+}
+
 @media (320px <=width <=800px) {
   .addTask-Container {
     width: 100% !important;

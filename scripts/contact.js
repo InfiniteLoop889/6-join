@@ -292,13 +292,6 @@ function toggleContactBg(e) {
   e.currentTarget.className = "contact-dark-blue";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  window.addEventListener("resize", () => {
-    const contactField = document.querySelector(".contact-field");
-    contactField.style.display = window.innerWidth > 860 ? "block" : "none";
-  });
-});
-
 function checkForError(event) {
   let container = event.currentTarget;
   let inputName = container.children[0].getAttribute("name");
