@@ -720,6 +720,11 @@ button div {
 }
 
 @media (max-width: 680px) {
+  .header-task {
+    width: 100%;
+    padding-left: 64px;
+  }
+
   .create-task-container {
     flex-grow: 1;
     justify-content: start;
@@ -746,6 +751,10 @@ button div {
 }
 
 @media (max-width: 590px) {
+  .header-task {
+    padding-left: 32px;
+  }
+
   .task-controls {
     flex-direction: column-reverse;
     gap: 32px;
@@ -757,6 +766,10 @@ button div {
 }
 
 @media (max-width: 480px) {
+  .header-task {
+    padding-left: 16px;
+  }
+
   .header-task {
     font-size: 2.5rem;
   }
