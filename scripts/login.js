@@ -1,9 +1,18 @@
+/**
+ * Resets signup UI state (hides messages, clears styles).
+ * @returns {void}
+ */
 function resetSignup() {
   emailForm.error.style.display = "none";
   emailForm.success.style.display = "none";
   emailForm.input.classList.remove("error", "success");
 }
 
+/**
+ * Enables/disables the login button based on email/password validity.
+ * Uses global `isEmailValid` and DOM #password.
+ * @returns {void}
+ */
 function updateLoginButton() {
   const passwordInput = document.getElementById("password");
   if (isEmailValid && passwordInput.value.trim()) {
@@ -15,6 +24,11 @@ function updateLoginButton() {
   }
 }
 
+/**
+ * Attempts to log in the user by loading users and validating credentials.
+ * Navigates on success, shows error on failure.
+ * @returns {Promise<void>}
+ */
 async function handleLogin() {
   const users = await loadData("users/");
   console.log(users);
@@ -27,6 +41,12 @@ async function handleLogin() {
   }
 }
 
+/**
+ * Starts login flow by redirecting to the target page with URL params.
+ * @param {string} name - Authenticated user's name.
+ * @param {string} target - Target page (without extension).
+ * @returns {void}
+ */
 function startLogin(name, target) {
   const params = new URLSearchParams({
     User: name,
@@ -35,7 +55,10 @@ function startLogin(name, target) {
   window.location.href = `./html-templates/${target}.html?${params}`;
 }
 
-
+/**
+ * Shows login failure UI and highlights input containers.
+ * @returns {void}
+ */
 function failLogin() {
   const errorElements = errorFields();
   const container = document.querySelectorAll(".input-container");
@@ -46,6 +69,11 @@ function failLogin() {
   });
 }
 
+/**
+ * Validates credentials against loaded users.
+ * @param {Object<string, {email:string,password:string,name:string}>} users - Users keyed by id.
+ * @returns {string|false} The matching user's name, or false if invalid.
+ */
 function isValidLogin(users) {
   const inputs = formFields();
   let validate = false;
@@ -60,6 +88,10 @@ function isValidLogin(users) {
   return false;
 }
 
+/**
+ * Validates current inputs and updates the login button state.
+ * @returns {void}
+ */
 function activateLogin() {
     const inputs = formFields();
     let email = validateEmail(inputs.email.value.trim());
@@ -67,11 +99,23 @@ function activateLogin() {
     updateLoginButton(email, password);
 }
 
+/**
+ * Checks if a password has non-zero length.
+ * @param {string} password - Password string.
+ * @returns {boolean} True if not empty.
+ */
 function checkPasswordLength(password) {
   if (password.length > 0) return true;
   return false;
 }
 
+/**
+ * Updates the login button enabled state based on booleans.
+ * NOTE: This name duplicates an earlier function and will override it.
+ * @param {boolean} email - Email validity flag.
+ * @param {boolean} password - Password presence flag.
+ * @returns {void}
+ */
 function updateLoginButton(email, password) {
     let loginBtn = document.getElementById("login-btn");
     if (email && password) {
@@ -79,6 +123,10 @@ function updateLoginButton(email, password) {
     } else loginBtn.disabled = true;
 }
 
+/**
+ * Clears login error styles and messages.
+ * @returns {void}
+ */
 function removeLoginErrors() {
   const container = document.querySelectorAll(".input-container");
   const errors = errorFields();
@@ -88,6 +136,9 @@ function removeLoginErrors() {
   errors.password.innerHTML = "";
 }
 
+/* 
+ * Registers click handlers to clear errors when inputs are focused.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const inputs = formFields();
   for (const key in inputs) {

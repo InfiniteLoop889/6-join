@@ -5,6 +5,10 @@ let assignedUserArr = [];
 let taskStatus = "to-do";
 let order = 1000;
 
+/**
+ * Initializes the Add Task page: loads users, URL status, template, and default priority.
+ * @returns {Promise<void>}
+ */
 async function initAddTaskPage() {
   await loadUsersTask();
   loadUrlStatus();
@@ -12,6 +16,10 @@ async function initAddTaskPage() {
   activePriority("medium");
 }
 
+/**
+ * Loads users from storage and populates the local users array.
+ * @returns {Promise<void>}
+ */
 async function loadUsersTask() {
   let usersObj = await loadData("users");
   for (const key in usersObj) {
@@ -19,6 +27,12 @@ async function loadUsersTask() {
   }
 }
 
+/**
+ * Creates a subtask object.
+ * @param {number} id - Subtask id.
+ * @param {string} value - Subtask text.
+ * @returns {{id:number,value:string,edit:boolean,checked:boolean}}
+ */
 function createSubObj(id, value) {
   return {
     id: id,
@@ -28,15 +42,30 @@ function createSubObj(id, value) {
   };
 }
 
+/**
+ * Sets task status from URL query string (defaults to "to-do").
+ * @returns {void}
+ */
 function loadUrlStatus() {
   const urlParams = new URLSearchParams(window.location.search);
   urlParams.size == 0 ? (taskStatus = "to-do") : (taskStatus = urlParams.get("Status"));
 }
 
+/**
+ * Prevents default form submission.
+ * @param {Event} event - The submit event.
+ * @returns {void}
+ */
 function preventFromSubmit(event) {
   event.preventDefault();
 }
 
+/**
+ * Renders the task form into two container targets.
+ * @param {string} firstTarget - ID of first container.
+ * @param {string} secondTarget - ID of second container.
+ * @returns {void}
+ */
 function loadTaskFormTemplate(firstTarget, secondTarget) {
   let firstContainer = document.getElementById(firstTarget);
   let secondContainer = document.getElementById(secondTarget);
@@ -52,6 +81,10 @@ function loadTaskFormTemplate(firstTarget, secondTarget) {
   secondContainer.innerHTML += subtaskTpl();
 }
 
+/**
+ * Clears assignees and resets each user's assigned flag.
+ * @returns {void}
+ */
 function removeAssignment() {
   assignedUserArr = [];
   users.forEach((user) => {
@@ -59,6 +92,10 @@ function removeAssignment() {
   });
 }
 
+/**
+ * Returns references to assignee-related DOM nodes.
+ * @returns {{taskContainer:HTMLElement,btn:HTMLElement,dropdown:HTMLElement,overlay:HTMLElement,input:HTMLInputElement}}
+ */
 function getAssigneeRefs() {
   return {
     taskContainer: document.getElementById("task-container"),
@@ -69,6 +106,10 @@ function getAssigneeRefs() {
   };
 }
 
+/**
+ * Toggles the assignee dropdown and related UI state.
+ * @returns {void}
+ */
 function toggleAssignedDropdown() {
   const refs = getAssigneeRefs();
   refs.input.value = "";
@@ -81,6 +122,11 @@ function toggleAssignedDropdown() {
   refs.btn.classList.contains("rotate-180deg") ? filterUsers() : resetAssigneeFilter();
 }
 
+/**
+ * Filters visible users in the dropdown by name.
+ * @param {string} [input] - Filter text.
+ * @returns {void}
+ */
 function filterUsers(input) {
   if (!input) return;
   const userContainers = document.querySelectorAll('[data-type="userContainer"]');
@@ -90,6 +136,10 @@ function filterUsers(input) {
   });
 }
 
+/**
+ * Resets the assignee filter and placeholder text.
+ * @returns {void}
+ */
 function resetAssigneeFilter() {
   const refs = getAssigneeRefs();
   const userContainers = document.querySelectorAll('[data-type="userContainer"]');
@@ -99,6 +149,10 @@ function resetAssigneeFilter() {
   });
 }
 
+/**
+ * Returns references to category dropdown elements.
+ * @returns {{container:HTMLElement,dropdown:HTMLElement,overlay:HTMLElement,btn:HTMLElement}}
+ */
 function getCategoryRefs() {
   return {
     container: document.getElementById("category-container"),
@@ -108,6 +162,10 @@ function getCategoryRefs() {
   };
 }
 
+/**
+ * Toggles the category dropdown and visual state.
+ * @returns {void}
+ */
 function toggleCategoryDropdown() {
   const r = getCategoryRefs();
   r.container.classList.toggle("zindex-12");
@@ -118,10 +176,20 @@ function toggleCategoryDropdown() {
   r.btn.parentElement.classList.toggle("blue-border");
 }
 
+/**
+ * Toggles a blue outline on the target's parent (focus/active styling).
+ * @param {Event} e - UI event.
+ * @returns {void}
+ */
 function toggleBlueOutline(e) {
   e.target.parentElement.classList.toggle("blue-border");
 }
 
+/**
+ * Sets and highlights the selected priority button.
+ * @param {"urgent"|"medium"|"low"} prio - Priority key.
+ * @returns {void}
+ */
 function activePriority(prio) {
   const priorities = ["urgent", "medium", "low"];
   selectedPriority = prio;
@@ -132,17 +200,35 @@ function activePriority(prio) {
   });
 }
 
+/**
+ * Applies active styles to a priority button and stores selection.
+ * @param {HTMLElement} btn
+ * @param {HTMLElement} icon
+ * @param {"urgent"|"medium"|"low"} priority
+ * @returns {void}
+ */
 function prioBtnActive(btn, icon, priority) {
   btn.classList.add(`active-${priority}-btn`);
   icon.classList.add(`active-${priority}-icon`);
   selectedPriority = priority;
 }
 
+/**
+ * Removes active styles from a priority button.
+ * @param {HTMLElement} btn
+ * @param {HTMLElement} icon
+ * @param {"urgent"|"medium"|"low"} priority
+ * @returns {void}
+ */
 function prioBtnOff(btn, icon, priority) {
   btn.classList.remove(`active-${priority}-btn`);
   icon.classList.remove(`active-${priority}-icon`);
 }
 
+/**
+ * Adds a subtask from the input field to the list.
+ * @returns {void}
+ */
 function addSubtask() {
   const inputElement = document.getElementById("subtask-input");
   const subList = document.getElementById("sub-list");
@@ -156,6 +242,10 @@ function addSubtask() {
   inputElement.value = "";
 }
 
+/**
+ * Returns the next free numeric id for subtasks.
+ * @returns {number}
+ */
 function getNextFreeId() {
   let i = 0;
   while (subtask.some((item) => item.id === i)) {
@@ -164,12 +254,21 @@ function getNextFreeId() {
   return i;
 }
 
+/**
+ * Removes a subtask by id and re-renders the list.
+ * @param {number} value - Subtask id.
+ * @returns {void}
+ */
 function removeSubItem(value) {
   const newArr = subtask.filter((element) => element.id != value);
   subtask = newArr;
   reloadSubTask();
 }
 
+/**
+ * Re-renders the subtask list depending on edit mode.
+ * @returns {void}
+ */
 function reloadSubTask() {
   const subList = document.getElementById("sub-list");
   subList.innerHTML = "";
@@ -182,6 +281,12 @@ function reloadSubTask() {
   });
 }
 
+/**
+ * Toggles edit mode for a subtask and persists updated value.
+ * @param {number} id - Subtask id.
+ * @param {boolean} editMode - Edit mode flag.
+ * @returns {void}
+ */
 function editSubItem(id, editMode) {
   const input = document.getElementById(`sub-input-${id}`);
   for (let index = 0; index < subtask.length; index++) {
@@ -196,6 +301,11 @@ function editSubItem(id, editMode) {
   reloadSubTask();
 }
 
+/**
+ * Selects a category from dropdown and updates the label.
+ * @param {Event} e - Click event on category item.
+ * @returns {void}
+ */
 function selectCategory(e) {
   let value = e.target.innerHTML;
   const selectCategory = document.getElementById("select-category");
@@ -203,6 +313,10 @@ function selectCategory(e) {
   toggleCategoryDropdown();
 }
 
+/**
+ * Renders the user list into the assignee dropdown.
+ * @returns {void}
+ */
 function loadUsers() {
   const assignedDropdown = document.getElementById("assigned-dropdown");
   assignedDropdown.innerHTML = "";
@@ -216,6 +330,11 @@ function loadUsers() {
   });
 }
 
+/**
+ * Derives initials from a user's full name.
+ * @param {string} user - Full name string.
+ * @returns {string}
+ */
 function initialsFromName(user) {
   let initials = "";
   const array = user.split(" ");
@@ -225,6 +344,11 @@ function initialsFromName(user) {
   return initials;
 }
 
+/**
+ * Toggles a user's assigned state and updates UI/icons.
+ * @param {string} name - User name.
+ * @returns {void}
+ */
 function assignedUser(name) {
   let index = searchUserIndex(name);
   const refs = getAssigneeRefs();
@@ -243,6 +367,11 @@ function assignedUser(name) {
   filterUsers(refs.input.value);
 }
 
+/**
+ * Finds a user's index by name.
+ * @param {string} name - User name.
+ * @returns {number|undefined}
+ */
 function searchUserIndex(name) {
   for (let index = 0; index < users.length; index++) {
     if (users[index].name == name) {
@@ -251,6 +380,10 @@ function searchUserIndex(name) {
   }
 }
 
+/**
+ * Renders up to four assignee icons (+counter for the rest).
+ * @returns {void}
+ */
 function loadAssignedUserIcons() {
   const container = document.getElementById("icons-container");
   if (!container) return;
@@ -266,6 +399,11 @@ function loadAssignedUserIcons() {
   container.innerHTML = html;
 }
 
+/**
+ * Removes a user from the local assigned array by name.
+ * @param {string} name - User name.
+ * @returns {void}
+ */
 function removeUserFromArray(name) {
   let arr = [];
   assignedUserArr.forEach((user) => {
@@ -276,6 +414,10 @@ function removeUserFromArray(name) {
   assignedUserArr = arr;
 }
 
+/**
+ * Validates, builds, and posts a task, then plays success animation.
+ * @returns {Promise<void>}
+ */
 async function createTaskForm() {
   let validateTask = isTaskDataValid();
   if (!validateTask) return;
@@ -284,6 +426,10 @@ async function createTaskForm() {
   animationSuccess();
 }
 
+/**
+ * Re-initializes the page if the current form state is valid.
+ * @returns {void}
+ */
 function runInitIfValid() {
   let validateTask = isTaskDataValid();
   if (!validateTask) return;
@@ -291,6 +437,10 @@ function runInitIfValid() {
   initAddTaskPage();
 }
 
+/**
+ * Forces status to "to-do" and updates the URL accordingly.
+ * @returns {void}
+ */
 function updateStatusToTodo() {
   taskStatus = "to-do";
   const url = new URL(window.location.href);
@@ -298,6 +448,10 @@ function updateStatusToTodo() {
   window.history.replaceState({}, "", url);
 }
 
+/**
+ * Validates task form fields and shows inline errors.
+ * @returns {boolean} True if valid, else false.
+ */
 function isTaskDataValid() {
   let isValid = true;
   const formIds = getFormElementsIds();
@@ -320,6 +474,10 @@ function isTaskDataValid() {
   return isValid;
 }
 
+/**
+ * Returns references to task form elements.
+ * @returns {{title:HTMLInputElement,date:HTMLInputElement,category:{span:HTMLElement,dropdown:HTMLElement},description:HTMLTextAreaElement}}
+ */
 function getFormElementsIds() {
   const titelId = document.getElementById("titleInput");
   const dateId = document.getElementById("date");
@@ -338,6 +496,14 @@ function getFormElementsIds() {
   return formIds;
 }
 
+/**
+ * Builds a task object from current form values.
+ * @param {"urgent"|"medium"|"low"} [priority="medium"] - Selected priority.
+ * @param {Array<Object>} users - Assigned users array.
+ * @param {Array<Object>} subtask - Subtasks array.
+ * @param {string} [status="to-do"] - Task status.
+ * @returns {Object}
+ */
 function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") {
   let categoryText = document.getElementById("select-category").innerText;
   console.log(categoryText);
@@ -355,17 +521,34 @@ function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") 
   };
 }
 
+/**
+ * Clears error styling from a field and removes its error message.
+ * @param {HTMLElement} target - The input element.
+ * @param {HTMLElement} error - The error message element.
+ * @returns {void}
+ */
 function clearInputError(target, error) {
   target.classList.remove("light-red-outline");
   target.classList.add("blue-outline");
   error.innerHTML = "";
 }
 
+/**
+ * Applies error styling to an input field.
+ * @param {HTMLElement} target - The input element.
+ * @returns {void}
+ */
 function addErrorClasses(target) {
   target.classList.add("light-red-outline");
   target.classList.remove("blue-outline");
 }
 
+/**
+ * Displays an error message on a field and attaches a reset handler.
+ * @param {HTMLElement} target - The input element.
+ * @param {string} name - The field name (used to find the error element).
+ * @returns {void}
+ */
 function showError(target, name) {
   let error = document.getElementById(`${name}Error`);
   addErrorClasses(target);
@@ -375,12 +558,21 @@ function showError(target, name) {
   });
 }
 
+/**
+ * Removes all validation outlines from a field when it loses focus.
+ * @param {FocusEvent} e - The blur event.
+ * @returns {void}
+ */
 function onFocusOut(e) {
   let target = e.target;
   target.classList.remove("light-red-outline");
   target.classList.remove("blue-outline");
 }
 
+/**
+ * Shows a success animation and navigates back to the board page.
+ * @returns {void}
+ */
 function animationSuccess() {
   const successMessage = document.querySelector(".success-message");
   successMessage.classList.add("is-open");
@@ -388,6 +580,13 @@ function animationSuccess() {
     goToPage(taskStatus, "board");
   }, 1600);
 }
+
+/**
+ * Validates a date string against today's date.
+ * If the input is incomplete or in the past, the field is reset or set to today.
+ *
+ * @param {string} value - Date string in "YYYY-MM-DD" format.
+ */
 
 function checkDate(value) {
   const input = document.getElementById("date");
@@ -413,7 +612,10 @@ function checkDate(value) {
   if (userDateArr[0] < todayArr[0]) input.value = today;
 }
 
-
+/**
+ * Sets the minimum selectable date of the date input field to today.
+ * @returns {void}
+ */
 function setMinDateToToday() {
   const today = new Date().toISOString().split("T")[0];
   const todayArray = today.split("-");
