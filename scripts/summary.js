@@ -1,3 +1,7 @@
+/**
+ * Zählt die verschiedenen Task-Status und aktualisiert die entsprechenden DOM-Elemente.
+ * @param {Object} tasks - Objekt mit allen Tasks.
+ */
 function countTasks(tasks) {
   const taskTodoRef = document.querySelector("[data-task='to-do']");
   const taskDoneRef = document.querySelector("[data-task='done']");
@@ -15,6 +19,13 @@ function countTasks(tasks) {
   taskFeddbackRef.innerText = Object.values(tasks).filter((task) => task.status === taskFeddbackRef.dataset.task).length;
 }
 
+/**
+ * Prüft, ob es dringende Tasks gibt, setzt deren Anzahl
+ * und zeigt die früheste Deadline im DOM an.
+ * @param {Object} tasks - Alle Tasks.
+ * @param {HTMLElement} taskRef - Referenz für die Anzeige der Anzahl dringender Tasks.
+ * @param {HTMLElement} deadlineRef - Referenz für die Anzeige des Deadlines.
+ */
 function checkForUrgentTasks(tasks, taskRef, deadlineRef) {
   let urgentTask = Object.values(tasks).filter((task) => task.priority === "urgent" && task.status !== "done");
   let sortedTaskObj = urgentTask.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -30,18 +41,26 @@ function checkForUrgentTasks(tasks, taskRef, deadlineRef) {
   }
 }
 
+/**
+ * Initialisiert die Übersicht (Summary),
+ * lädt Tasks und rendert Begrüßung.
+ */
 async function initSummary() {
   let taskObj = await loadData("tasks/");
   countTasks(taskObj);
   renderGreeting();
 }
 
+/**
+ * Rendert die personalisierte Begrüßung
+ * (oder Standard-Gruß, falls "Guest").
+ */
 function renderGreeting() {
-  const name = new URLSearchParams(window.location.search).get("User");  
-  const container = document.querySelector(".greeting")
+  const name = new URLSearchParams(window.location.search).get("User");
+  const container = document.querySelector(".greeting");
   let greetings = document.createElement("h2");
   let nameTag = document.createElement("p");
-  container.innerHTML = "";  
+  container.innerHTML = "";
   if (name == "Guest" || !name) {
     greetings.innerHTML = getGreeting();
     container.appendChild(greetings);
@@ -53,6 +72,10 @@ function renderGreeting() {
   }
 }
 
+/**
+ * Gibt eine Begrüßung abhängig von der aktuellen Uhrzeit zurück.
+ * @returns {string} - Begrüßungstext.
+ */
 function getGreeting() {
   const hour = new Date().getHours();
   if (hour >= 5 && hour < 12) {
