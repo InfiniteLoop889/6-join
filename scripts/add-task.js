@@ -389,8 +389,33 @@ function animationSuccess() {
   }, 1600);
 }
 
+function checkDate(value) {
+  const input = document.getElementById("date");
+  const today = new Date().toISOString().split("T")[0];
+  const todayArr = today.split("-").map((x) => Number(x));
+  const userDateArr = value.split("-").map((x) => Number(x));
+  if (userDateArr.length < 3) {
+    input.value = "";
+    return
+  };
+  if (userDateArr[0] < todayArr[0] && userDateArr[1] < todayArr[1] && userDateArr[2] < todayArr[2]) {
+    input.value = today;
+    return
+  };
+  if (userDateArr[1] <= todayArr[1] && userDateArr[2] < todayArr[2]) {    
+    input.value = today;
+    return
+  };
+  if (userDateArr[0] <= todayArr[0] && userDateArr[1] < todayArr[1]) {
+    input.value = today;
+    return
+  };
+  if (userDateArr[0] < todayArr[0]) input.value = today;
+}
+
 
 function setMinDateToToday() {
   const today = new Date().toISOString().split("T")[0];
+  const todayArray = today.split("-");
   document.getElementById("date").setAttribute("min", today);
 }

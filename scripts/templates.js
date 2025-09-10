@@ -74,7 +74,7 @@ function dateTaskTpl(date = "") {
             <label for="date" class="task-name">
                 Due date<span class="red-font">*</span>
             </label>
-            <input type="date" class="input-task date-field" id="date" max="9999-12-31" value="${date}">
+            <input type="date" class="input-task date-field" id="date" max="9999-12-31" value="${date}" onfocusout="checkDate(value)">
             <span id="dateError" class="error-message"></span>
         </div>
     `;

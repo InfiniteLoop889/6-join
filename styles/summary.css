@@ -213,6 +213,10 @@
 @media (max-width: 992px) {
   #content-wrapper {
     margin: 96px 0 108px 0;
+  } 
+
+  .parent {
+    grid-template-rows: repeat(3, 132px);
   }
 }
 
@@ -236,6 +240,7 @@
   .dashboard-summary {
     flex-direction: column-reverse;
   }
+  
 
   @keyframes fadeout {
     50% {
@@ -254,10 +259,7 @@
 
   .greeting {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: 0;
     background-color: #f6f7f8;
     display: flex;
     align-items: center;
@@ -268,10 +270,6 @@
     animation-duration: 1s;
     animation-iteration-count: unset;
     animation-fill-mode: forwards;
-  }
-
-  .parent {
-    grid-template-rows: repeat(3, 132px);
   }
 }
 
