@@ -506,7 +506,6 @@ function getFormElementsIds() {
  */
 function taskObjTemplate(priority = "medium", users, subtask, status = "to-do") {
   let categoryText = document.getElementById("select-category").innerText;
-  console.log(categoryText);
 
   return {
     title: document.getElementById("titleInput").value,

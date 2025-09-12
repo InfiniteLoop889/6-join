@@ -418,7 +418,6 @@ function sidebarLinkTemplate() {
 }
 
 function editContactOverlay(id, user) {
-  console.log(id);
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = `
     <div class="overlay-outer overlay-wrapper transit">

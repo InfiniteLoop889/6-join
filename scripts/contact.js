@@ -198,7 +198,6 @@ function editForm(id, user) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     let validateUser = await validateNewUser(true);
-    console.log(validateUser);
 
     if (!validateUser) return;
     const updateUser = createUser(document.getElementById("contact-name").value, document.getElementById("contact-email").value, document.getElementById("contact-phone").value, user.color, user.assigned, user.password);
