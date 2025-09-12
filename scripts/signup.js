@@ -1,18 +1,4 @@
 /**
- * Returns references to all input fields of the form.
- * @returns {Object} Object with form input elements.
- */
-function formFields() {
-  return {
-    name: document.querySelector('[data-field="name"]'),
-    email: document.querySelector('[data-field="email"]'),
-    password: document.querySelector('[data-field="password"]'),
-    confirmPassword: document.querySelector('[data-field="confirmPassword"]'),
-    phone: document.querySelector('[data-field="phone"]'),
-  };
-}
-
-/**
  * Returns references to all error display fields of the form.
  * @returns {Object} Object with error elements.
  */
@@ -23,6 +9,20 @@ function errorFields() {
     password: document.querySelector('[data-field="errorPassword"]'),
     policy: document.querySelector('[data-field="errorPolicy"]'),
     phone: document.querySelector('[data-field="errorPhone"]'),
+  };
+}
+
+/**
+ * Returns references to all input fields of the form.
+ * @returns {Object} Object with form input elements.
+ */
+function formFields() {
+  return {
+    name: document.querySelector('[data-field="name"]'),
+    email: document.querySelector('[data-field="email"]'),
+    password: document.querySelector('[data-field="password"]'),
+    confirmPassword: document.querySelector('[data-field="confirmPassword"]'),
+    phone: document.querySelector('[data-field="phone"]'),
   };
 }
 
@@ -79,17 +79,6 @@ function comparePasswords(password, confirmPassword) {
 }
 
 /**
- * Handles user sign-up process.
- */
-async function addUser() {
-  const inputs = formFields();
-  let signUp = await checkFormFields();
-  if (!signUp) return;
-  await postUser(inputs.name.value, inputs.email.value, inputs.password.value);
-  showSignupSuccess();
-}
-
-/**
  * Displays signup success overlay, then redirects to login.
  */
 function showSignupSuccess() {
@@ -110,30 +99,6 @@ function openLogin() {
 }
 
 /**
- * Opens the privacy policy page.
- * @param {string} [path=""] - Base path for the URL.
- */
-function openPrivacy(path = "") {
-  const params = new URLSearchParams({
-    User: "privacy",
-    Status: "to-do",
-  });
-  window.location.href = `${path}./html-templates/privacy-policy-logged-out.html?${params}`;
-}
-
-/**
- * Opens the legal notice page.
- * @param {string} [path=""] - Base path for the URL.
- */
-function openLegal(path = "") {
-  const params = new URLSearchParams({
-    User: "legal",
-    Status: "to-do",
-  });
-  window.location.href = `${path}./html-templates/legal-notice-logged-out.html?${params}`;
-}
-
-/**
  * Validates that a name is provided.
  * @param {string} userName - The name to validate.
  * @returns {boolean} True if valid, false otherwise.
@@ -147,19 +112,6 @@ function checkName(userName) {
     addRedOutline(inputContainer[0]);
   }
   return validate;
-}
-
-/**
- * Validates if the provided email has correct format.
- * @param {string} email - Email string to validate.
- * @returns {boolean} True if valid, false otherwise.
- */
-function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email) || !email) {
-    return false;
-  }
-  return true;
 }
 
 /**
@@ -245,41 +197,28 @@ function toggleInputType(e, data, path = "") {
   e.target.src = isPassword ? `${path}./assets/icons/eye-slash.svg` : `${path}./assets/icons/eye-icon.svg`;
 }
 
-// Initialize form events after DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  const inputs = formFields();
-  const error = errorFields();
-  const inputContainer = document.querySelectorAll(".input-container");
-  addEventToInputs(inputs, error, inputContainer);
-});
-
 /**
- * Attaches event listeners to form inputs to clear errors on interaction.
- * @param {Object} inputs - Input field references.
- * @param {Object} error - Error field references.
- * @param {NodeList} inputContainer - List of input container elements.
+ * Clears error messages and removes red outlines for the clicked input container.
+ * Behavior depends on the container’s input type (checkbox|password|email|text).
+ * Uses `errorFields()` and `formFields()`.
+ * @param {Event} e - Event whose `currentTarget` is the container (first child is the input).
  */
-function addEventToInputs(inputs, error, inputContainer) {
-  for (const key in inputs) {
-    if (!inputs[key]) return;
-    inputs[key].addEventListener("click", () => {
-      let name = inputs[key].getAttribute("name");
-      if (name == "name") removeErrorReport(error.name, inputContainer[0]);
-      if (name == "email") removeErrorReport(error.email, inputContainer[1]);
-      if (name == "password" || name == "confirmPassword") {
-        removeErrorReport(error.password, inputContainer[2]);
-        removeErrorReport(error.password, inputContainer[3]);
-      }
-    });
+
+function removeErrorReport(e) {
+  const errors = errorFields();
+  const inputs = formFields();
+  let type = e.currentTarget.children[0].type;
+  if (type == "checkbox") errors.policy.innerHTML = "";
+  if (type == "password") {
+    inputs.password.parentElement.classList.remove("light-red-outline");
+    inputs.confirmPassword.parentElement.classList.remove("light-red-outline");
+    errors.password.innerHTML = "";
   }
+  if (type == "email") removeError(inputs.email.parentElement, errors.email);
+  if (type == "text") removeError(inputs.name.parentElement, errors.name);
 }
 
-/**
- * Removes error messages and red outlines from an input container.
- * @param {HTMLElement} error - Error element to clear.
- * @param {HTMLElement} inputContainer - Container element to reset.
- */
-function removeErrorReport(error, inputContainer) {
-  error.innerHTML = "";
-  inputContainer.classList.remove("light-red-outline");
+function removeError(container, errorElement) {
+  container.classList.remove("light-red-outline");
+  errorElement.innerHTML = "";
 }

@@ -18,7 +18,7 @@
     <script src="./script.js"></script>
 </head>
 
-<body>
+<body onload="addEventToInputs()">
     <div class="start-overlay"></div>
 
     <div class="max-width-wrapper">
@@ -70,8 +70,8 @@
 
         <footer>
             <div class="Legal-texts">
-                <btn class="Privacy-text" onclick="openPrivacy('')">Privacy policy</btn>
-                <btn class="Privacy-text" onclick="openLegal('')">Legal notice</btn>
+                <btn class="Privacy-text" onclick="openLoggedOutPrivacy('')">Privacy policy</btn>
+                <btn class="Privacy-text" onclick="openLoggedOutLegal('')">Legal notice</btn>
             </div>
         </footer>
     </div>

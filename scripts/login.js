@@ -31,8 +31,7 @@ function updateLoginButton() {
  */
 async function handleLogin() {
   const users = await loadData("users/");
-  console.log(users);
-  
+
   let userName = isValidLogin(users);
   if (userName) {
     startLogin(userName, "summary");
@@ -93,10 +92,10 @@ function isValidLogin(users) {
  * @returns {void}
  */
 function activateLogin() {
-    const inputs = formFields();
-    let email = validateEmail(inputs.email.value.trim());
-    let password = checkPasswordLength(inputs.password.value.trim());
-    updateLoginButton(email, password);
+  const inputs = formFields();
+  let email = validateEmail(inputs.email.value.trim());
+  let password = checkPasswordLength(inputs.password.value.trim());
+  updateLoginButton(email, password);
 }
 
 /**
@@ -117,10 +116,10 @@ function checkPasswordLength(password) {
  * @returns {void}
  */
 function updateLoginButton(email, password) {
-    let loginBtn = document.getElementById("login-btn");
-    if (email && password) {
-        loginBtn.disabled = false;
-    } else loginBtn.disabled = true;
+  let loginBtn = document.getElementById("login-btn");
+  if (email && password) {
+    loginBtn.disabled = false;
+  } else loginBtn.disabled = true;
 }
 
 /**
@@ -136,10 +135,34 @@ function removeLoginErrors() {
   errors.password.innerHTML = "";
 }
 
+/**
+ * Opens the privacy policy page.
+ * @param {string} [path=""] - Base path for the URL.
+ */
+function openLoggedOutPrivacy(path = "") {
+  const params = new URLSearchParams({
+    User: "privacy",
+    Status: "to-do",
+  });
+  window.location.href = `${path}./html-templates/privacy-policy-logged-out.html?${params}`;
+}
+
+/**
+ * Opens the legal notice page.
+ * @param {string} [path=""] - Base path for the URL.
+ */
+function openLoggedOutLegal(path = "") {
+  const params = new URLSearchParams({
+    User: "legal",
+    Status: "to-do",
+  });
+  window.location.href = `${path}./html-templates/legal-notice-logged-out.html?${params}`;
+}
+
 /* 
  * Registers click handlers to clear errors when inputs are focused.
  */
-document.addEventListener("DOMContentLoaded", () => {
+function addEventToInputs() {
   const inputs = formFields();
   for (const key in inputs) {
     if (inputs[key] == null) continue;
@@ -147,4 +170,4 @@ document.addEventListener("DOMContentLoaded", () => {
       removeLoginErrors();
     });
   }
-});
+}

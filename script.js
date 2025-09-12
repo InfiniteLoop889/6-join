@@ -189,14 +189,6 @@ function updateLinksWithUserKey(target) {
 }
 
 /**
- * Placeholder to handle privacy/legal-related URL parameters.
- */
-function isPrivacyMessage() {
-  const urlParams = new URLSearchParams(window.location.search);
-  // if (urlParams.get("User") === "privacy" || urlParams.get("User") === "legal") adjustLayoutForPrivacyView();
-}
-
-/**
  * Adjusts the navigation layout for privacy/legal pages.
  */
 function adjustLayoutForPrivacyView() {
@@ -236,4 +228,28 @@ function toggleMenu() {
       container.classList.add("d-none");
     }, 150);
   }
+}
+
+/**
+ * Handles user sign-up process.
+ */
+async function addUser() {
+  const inputs = formFields();
+  let signUp = await checkFormFields();
+  if (!signUp) return;
+  await postUser(inputs.name.value, inputs.email.value, inputs.password.value);
+  showSignupSuccess();
+}
+
+/**
+ * Validates if the provided email has correct format.
+ * @param {string} email - Email string to validate.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email) || !email) {
+    return false;
+  }
+  return true;
 }
